@@ -1,0 +1,106 @@
+% CTUstyle3 template
+\input ctustyle3
+
+\worktype [B/EN]
+
+\faculty {F3}
+\department {Department of Cybernetics}
+
+\title {Using ROS 2 for High-Speed Maneuvering in Autonomous Driving}
+\titleCZ {Použití ROS 2 pro manévrování ve vysoké rychlosti v autonomním řízení}
+\author {Martin Endler}
+\date {July 2022}  % TODO: maybe change to August 2022
+
+\supervisor {Ing. Michal Sojka, Ph.D.}
+\studyinfo  {Open Informatics – Artificial Intelligence and Computer Science}
+\workinfo   {\url{https://github.com/pokusew/fel-bachelors-thesis}}  % TODO: use final URL here
+
+% TODO: abstract, keywords
+% TODO: consider switiching the position of abstractCZ/keywordsCZ with abstractEN/keywordsEN in the template
+
+\abstractEN {
+
+	The new version of the Robot Operating System – ROS~2 – brings significant improvements
+	over its predecessor ROS~1. We briefly describe both versions and compare their differences.
+	Then we cover the process of migrating a ROS 1 application to ROS~2 on the example of the Follow the Gap app
+	that is part of CTU's F1/10 project.
+
+	In the next part, we focus on setting up an NVIDIA Jetson TX2 module so that it can run ROS 2 applications and
+	provide good developer experience in environments where Jetson module is shared among many students and
+	researchers.
+
+	The first result of this project is a~ROS~2 port of the Follow the Gap application. Its working is
+	demonstrated in the Stage simulator on Ubuntu and macOS. The second result is a setup guide for NVIDIA Jetson
+	TX2 that covers creating a fully-setup OS image with ROS 2 on a bootable SD card. The last result is a
+	collection of setup guides and documentation that cover various aspects of working with ROS.
+
+}
+\keywordsEN {
+	ROS, ROS 1, ROS 2, ROS 2 migration, F1/10, Follow the Gap, autonomous model car, NVIDIA Jetson TX2
+}
+
+\abstractCZ {
+
+	The new version of the Robot Operating System – ROS~2 – brings significant improvements
+	over its predecessor ROS~1. We briefly describe both versions and compare their differences.
+	Then we cover the process of migrating a ROS 1 application to ROS~2 on the example of the Follow the Gap app
+	that is part of CTU's F1/10 project.
+
+	In the next part, we focus on setting up an NVIDIA Jetson TX2 module so that it can run ROS 2 applications and
+	provide good developer experience in environments where Jetson module is shared among many students and
+	researchers.
+
+	The first result of this project is a~ROS~2 port of the Follow the Gap application. Its working is
+	demonstrated in the Stage simulator on Ubuntu and macOS. The second result is a setup guide for NVIDIA Jetson
+	TX2 that covers creating a fully-setup OS image with ROS 2 on a bootable SD card. The last result is a
+	collection of setup guides and documentation that cover various aspects of working with ROS.
+
+}
+\keywordsCZ {
+	ROS, ROS 1, ROS 2, ROS 2 migration, F1/10, Follow the Gap, autonomous model car, NVIDIA Jetson TX2
+}
+
+% TODO: expand (Tomáš + UPenn)
+\thanks {
+	I would like to thank my supervisor Ing.~Michal~Sojka,~Ph.D. for his guidance and support.
+	Also, I would like to thank Ing.~Jaroslav~Klapálek for providing valuable information
+	and advice regarding the F1/10 project.
+}
+\declaration {
+	I declare that the presented work was developed independently and that I have listed all sources of information
+	used within it in accordance with the methodical instructions for observing the ethical principles in the
+	preparation of university theses.
+
+	Prague, August 15, 2022  % TODO: verify the date is correct, also consider using "In Prague, ..."
+	\signature % makes dots
+}
+
+% link glossary data
+\input glossary
+
+%%%%% <--   % The place for your own macros is here.
+
+%\draft     % Uncomment this if the version of your document is working only.
+%\linespacing=1.7  % uncomment this if you need more spaces between lines
+% Warning: this works only when \draft is activated!
+%\savetoner        % Turns off the lightBlue backround of tables and
+% verbatims, only for \draft version.
+%\blackwhite       % Use this if you need really Black+White thesis.
+%\onesideprinting  % Use this if you really don't use duplex printing.
+
+% make title page, acknowledgment, contents etc.
+\makefront
+
+% contents
+\input 1-introduction
+\input 2-ros
+\input 3-f1tenth
+\input 4-follow-the-gap
+\input 5-jetson
+\input 6-conclusion
+
+% appendices
+\input appendices
+
+% document end
+\bye

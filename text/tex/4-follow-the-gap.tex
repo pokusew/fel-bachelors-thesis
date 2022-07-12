@@ -1,0 +1,63 @@
+\chap[follow_the_gap] Migration of the Follow the Gap
+
+We started by analyzing the operation of the Follow the Gap in its original ROS~1 environment.
+Then we also examined its code. We identified the packages that needed to be migrated to ROS~2.
+There are three main parts (nodes) that power the application:
+\begitems
+* "perception/recognition/obstacle_substitution" – It converts data from LIDAR to obstacles.
+* "decision_and_control/follow_the_gap_v0" – It consists of two nodes. First plans the trajectory using the data
+about obstacles.
+While the second converts the plan to the control commands and sends them to the Drive-API.
+* "vehicle_platform/drive_api" – It accepts control commands and controls the car accordingly (speed and steering).
+\enditems
+
+Apart from the nodes, there are messages definitions, launch files and various configuration that needs to be
+migrated too.
+
+After we got familiar with the structure of the application in ROS~1 environment, we actually proceeded
+with the migration itself. It was not an easy task as there were lots of tricky details and issues that needed
+to be solved. It required a~lof of searching in the official documentation as well as examining the ROS~2 source
+code and examples as not all concepts were equally well documented.
+
+Nevertheless, we {\sbf succeeded} in the task and we {\sbf successfully migrated} all the code required to run the
+application in a~simulator. The code can be found
+in "f1tenth_rewrite"\urlnote{https://github.com/pokusew/f1tenth-rewrite} repository.
+
+The most notable issue that has arisen is the fact that ROS~2 has no global Parameter Server.
+Instead, in ROS~2, parameters are managed per node. Each node implements a~parameter service that allows getting and
+setting the parameters during runtime. Initial values of parameters can be supplied at node startup time via command
+line arguments (parameters file). One of the most useful advantages this design brings, is that all parameters
+can be easily changed during runtime and nodes can implement custom behavior for handling the changes.
+In ROS~1, one must use solutions like "dynamic_reconfigure"\urlnote{https://wiki.ros.org/dynamic_reconfigure}
+to get similar features.
+
+We benefited from the new parameters' possibilities in the "follow_the_gap_v0_ride" node where we got rid of the
+"dynamic_reconfigure".
+
+On the other hand, in some situations it might be useful to have a~“global parameter storage”.
+In fact, the CTU's F1/10 project uses this concept very much. However, even in ROS~2, we can implement a~node that
+will act as a “global parameter storage” and will store the global car model configuration (such as sensors' types)
+so that the launch configurations can be shared among different car models.
+
+
+\sec Demonstration in the Stage simulator
+
+To verify the working of the migrated application, we used the Stage simulator. The Stage simulator was introduced
+in~\cite[klapalek_avoidance_2019]. We used "stage_ros2"\urlnote{https://github.com/ymd-stella/stage_ros2} package as
+bridge between ROS~2 system and the Stage simulator. However, the installation of Stage simulator
+was not so straightforward as it was not present in package managers on Ubuntu or macOS.
+So we had to build it from sources. The exact steps were different for each platform. As a~part of this project,
+a~colcon workspace "ros2-build"\urlnote{https://github.com/pokusew/ros2-build} was created that (among other things)
+allows building and using the Stage simulator.
+
+\midinsert
+\clabel[img_follow_the_gap_ros2_stage_ubuntu]{Follow the Gap in the Stage simulator on~Ubuntu}
+\picw=14cm \cinspic ../images/follow_the_gap_ros2_stage_ubuntu.png
+\caption/f Running the Follow the Gap application in the Stage simulator in ROS~2 on~Ubuntu~20.04 (as a~VM on~macOS)
+\endinsert
+
+\midinsert
+\clabel[img_follow_the_gap_ros2_stage_macos]{Follow the Gap in the Stage simulator on~macOS}
+\picw=14cm \cinspic ../images/follow_the_gap_ros2_stage_macOS.png
+\caption/f Running the Follow the Gap application in the Stage simulator in ROS~2 \hbox{on~macOS~10.14.6}
+\endinsert

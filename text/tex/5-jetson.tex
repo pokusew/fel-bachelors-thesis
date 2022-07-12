@@ -1,0 +1,97 @@
+\chap[jetson] NVIDIA Jetson TX2 Setup
+
+In order to run ROS 2 on NVIDIA Jetson TX2, we needed to prepare an appropriate OS image.
+In this part of the project, we worked with the NVIDIA Jetson TX2 Module on the NVIDIA Developer Kit carrier board.
+
+
+\sec Initial Setup
+
+NVIDIA provides {\em JetPack SDK} which is a collection of software for Jetson modules.
+The current version is 4.5.1. It contains {\em L4T (Linux For Tegra)} 32.5.1 which consists of
+flashing utilities, bootloader, Linux 4.9 Kernel, NVIDIA drivers and sample filesystem based on Ubuntu 18.04.
+
+We used the NVIDIA SDK Manager to flash the most-up-to-date version of JetPack to our Jetson TX2 module.
+
+
+\sec Building ROS 2 from Sources
+
+Then we followed with the customization of the Jetson TX2's Ubuntu 18.04 system.
+We had to built ROS 2 from sources as there are no binaries for Ubuntu 18.04 (only Ubuntu 20.04 is officially supported
+by ROS 2 Foxy Fitzroy).\nl
+The whole process is described at \url{https://github.com/pokusew/ros-setup/blob/master/nvidia-jetson-tx2/SETUP.md}.
+
+
+\sec Bootable SD Card
+
+Normally, the OS of the Jetson module is installed on its internal eMMC memory.
+Sometimes, the size of the built-in eMMC memory (32 GB) is not enough.
+At other times, one may want to be able to easily switch between different operating systems and configurations.
+This is especially useful in environments, where one Jetson module is shared by many students and researches.
+
+To support this use-case, Jetson TX2 can boot not only from its internal eMMC memory, but also from other media,
+including an SD card.
+
+In fact, NVIDIA Jetson TX2 has a relatively complicated 3-level boot process which is in detail described
+at~\cite[l4t_tx2_boot_flow]. It is worth mentioning that all these three bootloaders and their configs are always
+stored on hidden partitions on the internal eMMC memory and cannot be moved anywhere else.
+
+Fortunately, we are only interested in the last boot phase that is handled by U-Boot.
+
+“The U-Boot includes a default booting scan sequence. It scans bootable devices in the following order:
+\begitems
+* External SD card
+* Internal eMMC
+* USB device or NVMe device
+* NFS network via DHCP/PXE
+\enditems
+U‑Boot looks for an "<rootfs>/boot/extlinux/extlinux.conf" configuration file of the bootable partition on each
+bootable device”~\cite[l4t_uboot].
+
+The Jetson TX2 (resp. the NVIDIA Developer Kit carrier board) supports SD cards up to SDR104 mode (UHS-1).
+
+We purchased a SanDisk MicroSDXC 64GB Extreme Pro (with an SD adapter) which is the best possible SD card (UHS-1)
+still supported by the Jetson TX2. We inserted the SD card into the Developer Kit SD card slot (while the Jetson TX2
+was powered off as it does not support hot-plug). After powering the Jetson up, we formatted the card as "ext4" with
+a single partition. To this partition we copied the previously configured root filesystem from the internal eMMC memory.
+Then we updated the "/boot/extlinux/extlinux.conf" on the SD Card to incorporate new name of the root filesystem
+device that is passed from U-Boot to the Linux Kernel\fnote{The resulting "extlinux.conf" can be found at
+\url{https://github.com/pokusew/ros-setup/blob/master/nvidia-jetson-tx2/boot-config/mmcblk2/extlinux.conf}}.
+
+Then we rebooted the Jetson. {\sbf This time it successfully booted from the SD card.}
+
+This configuration works well for the use-case introduced above. {\sbf The whole system runs from the SD card}
+("extlinux.conf" and the Linux Kernel Image are both loaded from the SD card). This way each Jetson TX2 user
+can even customize the Linux Kernel Image for its application. When the SD card is not present during the boot,
+the Jetson boots normally from its internal eMMC memory.
+
+One might be interested also in performance impact on the system when running from the SD card compared to the
+internal eMMC memory. We did not perform any performance impact measurements, but we did perform
+a~{\em very simple}\fnote{During the test, a 10 MB of data was read 100 times.
+\nl The screenshot of the result for {\sbf the eMMC} is here:
+\nl \url{https://github.com/pokusew/ros-setup/blob/master/nvidia-jetson-tx2/boot-config/Screenshot\%20from\%202021-04-25\%2018-16-28.png}
+\nl The screenshot of the result for {\sbf the SD card} is here:
+\nl \url{https://github.com/pokusew/ros-setup/blob/master/nvidia-jetson-tx2/boot-config/Screenshot\%20from\%202021-04-25\%2019-45-06.png}
+}
+read speed test to get at least a rough estimate. We got the
+following results:
+\begitems
+* 246.6 MB/s (the internal eMMC memory)
+* 86.5 MB/s (the SanDisk MicroSDXC 64GB Extreme Pro)
+\enditems
+Please again note, that this test is mentioned just to get a rough estimate. A proper test (there might be big
+differences in sequential/random accesses, OS caches impact, etc.) should be done.
+
+
+\sec Running the Follow the Gap Demo
+
+After we set up the ROS 2 environment on NVIDIA Jetson TX2, we wanted to demonstrate its working.
+Though normally one would not use GUI on NVIDIA Jetson TX2, in this part of project we did decide to try it.
+So we prepared also build of the Stage simulator for TX2's Ubuntu 18.
+Then we successfully ran the Follow the Gap application
+as can be seen in the Figure~\ref[img_follow_the_gap_ros2_stage_tx2]
+
+\midinsert
+\clabel[img_follow_the_gap_ros2_stage_tx2]{Follow the Gap in the Stage simulator on~NVIDIA Jetson~TX2}
+\picw=14cm \cinspic ../images/follow_the_gap_ros2_stage_tx2.png
+\caption/f Running the Follow the Gap application in the Stage simulator in ROS~2 on~NVIDIA Jetson~TX2
+\endinsert

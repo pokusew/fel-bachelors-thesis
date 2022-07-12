@@ -1,0 +1,26 @@
+\chap[intro] Introduction
+
+Since the Robot Operating System was started in 2007~\cite[ros_history], it has gained great popularity and has become the standard in robotics community.
+However, it has turned out that the original architecture (ROS~1) has some limitations concerning {\em performance, efficiency and real-time safety}.
+Thus, a~new version of ROS -- {\em ROS~2} -- has been designed from ground up to allow more use-cases and solve pain points of ROS~1 ~\cite[ros2_design_why].
+Missing features and incompatible packages have been slowing down the adoption of ROS~2 since its first public release in 2017.
+But in recent years, the situation has improved a~lot, and the adoption of ROS~2 has accelerated~\cite[ros_metrics].
+Thus, now it might be the right time start migrating applications from ROS~1 to ROS~2 and benefit from the new possibilities.
+
+{\sbf The goal} of this project is to migrate a~selected part of the CTU's F1/10 project from ROS~1 Kinetic Kame to ROS~2 Foxy Fitzroy.
+The result should be a~working port running on ROS~2 in a~simulator and on a~physical model car with NVIDIA Jetson computing module.
+
+In the Chapter~\ref[ros], both versions of ROS are briefly described while highlighting main differences of ROS~2 when compared to ROS~1.
+
+In the Chapter~\ref[f1tenth], the software and hardware stack of CTU's F1/10 project is introduced.
+Then the Follow the Gap application is selected for migration to ROS~2.
+The migration is described in Chapter~\ref[follow_the_gap].
+The working of the migrated application is demonstrated in the Stage simulator on Ubuntu and macOS.
+Test.
+
+The Chapter~\ref[jetson] focuses on setting up an NVIDIA Jetson TX2 module so that it can run ROS~2 applications.
+The emphasis is given on providing a~good developer experience in environments where the Jetson module is shared among many students and researchers.
+Thus, boot options of the Jetson modules are explored.
+Then a~solution with a~bootable SD card is presented.
+
+Finally, {\sbf the achieved results} are summarized in the last Chapter~\ref[conclusion].
