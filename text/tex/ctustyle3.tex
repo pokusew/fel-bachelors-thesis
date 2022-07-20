@@ -373,13 +373,20 @@
 
 \_def\.abstractpage{
    \_chardef\.orilang=\_language
-   \_setbox\.leftbox=\_vbox{\.sethsizefront 
+   \_setbox\.leftbox=\_vbox{\.sethsizefront
+         \_enlang \_the\abstractEN \_par
+         \_if&\_the\keywordsEN&\_else{\.bf\_mtext{keywords}:} \_the\keywordsEN\_par\_fi
+         \_ifnum\.orilang=\_language \_else
+            \_if&\_the\titleEN&\_else{\.bf\_mtext{trans}:} \_the\titleEN
+               \_if&\_the\subtitleEN&\_else \_space(\_the\subtitleEN)\_fi\_fi\_fi
+         \_vfil}
+   \_setbox\.rightbox=\_vbox{\.sethsizefront
          \_if&\_the\abstractCZ&\_sklang \_the\abstractSK \_par
-            \_let\.keywords=\keywordsSK 
+            \_let\.keywords=\keywordsSK
             \_let\.titleL=\titleSK
             \_let\.subtitleL=\subtitleSK
          \_else \_cslang \_the\abstractCZ \_par
-            \_let\.keywords=\keywordsCZ 
+            \_let\.keywords=\keywordsCZ
             \_let\.titleL=\titleCZ
             \_let\.subtitleL=\subtitleCZ
          \_fi
@@ -388,32 +395,25 @@
             \_if&\_the\.titleL&\_else{\.bf\_mtext{trans}:} \_the\.titleL
                \_if&\_the\.subtitleL&\_else \_space(\_the\.subtitleL)\_fi\_fi\_fi
          \_vfil}
-   \_setbox\.rightbox=\_vbox{\.sethsizefront 
-         \_enlang \_the\abstractEN \_par
-         \_if&\_the\keywordsEN&\_else{\.bf\_mtext{keywords}:} \_the\keywordsEN\_par\_fi
-         \_ifnum\.orilang=\_language \_else
-            \_if&\_the\titleEN&\_else{\.bf\_mtext{trans}:} \_the\titleEN
-               \_if&\_the\subtitleEN&\_else \_space(\_the\subtitleEN)\_fi\_fi\_fi
-         \_vfil}
    \.prepbox\.leftbox \.prepbox\.rightbox
    \_ifvoid\.leftbox \_ifvoid\.rightbox \_let\.abstractpage=\_relax \_fi\_fi
    \_ifx\.abstractpage\_relax \_else
       \_setbox0=\_vsplit\.leftbox to\.frontht
       \_ifvoid\.leftbox
          \_setbox\.leftbox=\_box0
-         \_insertoutline{Abstrakt/Abstract}
-         \.frontpage[Abstrakt/Abstract]
+         \_insertoutline{Abstract/Abstrakt}
+         \.frontpage[Abstract/Abstrakt]
       \_else
          \_setbox1=\_box\.leftbox  % long abstracts, two pages for abstracts
          \_setbox\.leftbox=\_box0
          \_setbox0=\_box\.rightbox
          \_setbox\.rightbox=\_box1
-         \_insertoutline{Abstrakt}
-         \.frontpage[Abstrakt/]
-         \_setbox\.leftbox=\_vsplit0 to\.frontht
-         \_setbox\.rightbox=\_box0
          \_insertoutline{Abstract}
          \.frontpage[Abstract/]
+         \_setbox\.leftbox=\_vsplit0 to\.frontht
+         \_setbox\.rightbox=\_box0
+         \_insertoutline{Abstrakt}
+         \.frontpage[Abstrakt/]
    \_fi\_fi
 }
 \_addto\makefront{%
