@@ -14,6 +14,7 @@ open: pdf
 copy: pdf
 	@echo "copying PDF build to the final destination ..."
 	cp index.pdf ../Endler-Martin-ROS-2-Bachelors-Thesis-Latest.pdf
+	cp index.pdf ../Using_ROS_2_for_High-Speed_Maneuvering_in_Autonomous_Driving.pdf
 
 .PHONY: clean
 clean:

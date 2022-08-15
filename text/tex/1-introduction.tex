@@ -1,26 +1,41 @@
 \chap[intro] Introduction
 
-Since the Robot Operating System was started in 2007~\cite[ros_history], it has gained great popularity and has become the standard in robotics community.
-However, it has turned out that the original architecture (ROS~1) has some limitations concerning {\em performance, efficiency and real-time safety}.
-Thus, a~new version of ROS -- {\em ROS~2} -- has been designed from ground up to allow more use-cases and solve pain points of ROS~1 ~\cite[ros2_design_why].
-Missing features and incompatible packages have been slowing down the adoption of ROS~2 since its first public release in 2017.
-But in recent years, the situation has improved a~lot, and the adoption of ROS~2 has accelerated~\cite[ros_metrics].
-Thus, now it might be the right time start migrating applications from ROS~1 to ROS~2 and benefit from the new possibilities.
+{\sbf Disclaimer:} I severely underestimated the required time for writing this thesis text. During my work on this topic, I tried and made work tons of different things, leaving too little time for the final write-up. This is the reason why chapters X and Y are incomplete. They contain links to the GitHub repository with the implementation that will contain some background info. Additionally, this thesis has a homepage\urlnote{https://github.com/pokusew/fel-bachelors-thesis} on GitHub, where an up-to-date revision of this text can be found.
 
-{\sbf The goal} of this project is to migrate a~selected part of the CTU's F1/10 project from ROS~1 Kinetic Kame to ROS~2 Foxy Fitzroy.
-The result should be a~working port running on ROS~2 in a~simulator and on a~physical model car with NVIDIA Jetson computing module.
+% TODO: use vertical break
+\nl
 
-In the Chapter~\ref[ros], both versions of ROS are briefly described while highlighting main differences of ROS~2 when compared to ROS~1.
+Autonomous robots are successfully performing increasingly sophisticated tasks, often under challenging conditions. They must operate precisely and reliably because any hesitation or malfunction can cost human lives. At the same time, there is a strong desire among all robotics companies to shorten the time it takes to transform research prototypes into market-ready products. This is where the tools like ROS – Robot Operating System – come in.
 
-In the Chapter~\ref[f1tenth], the software and hardware stack of CTU's F1/10 project is introduced.
-Then the Follow the Gap application is selected for migration to ROS~2.
-The migration is described in Chapter~\ref[follow_the_gap].
-The working of the migrated application is demonstrated in the Stage simulator on Ubuntu and macOS.
-Test.
+Since the Robot Operating System was started in 2007~\cite[ros_history], it has gained great popularity and has become the standard in the robotics community. However, it has turned out that the original architecture (ROS 1) has some limitations concerning {\em performance, efficiency and real-time safety}, making it unsuitable for production deployments. Thus, a new version of ROS – {\em ROS~2} – has been designed from the ground up to allow more use-cases and solve many pain points of ROS 1 ~\cite[ros2_design_why]. Missing features and incompatible packages have been slowing down the adoption of ROS 2 since its first public release in 2017. But in recent years, the situation has improved a lot, and the adoption of ROS 2 has accelerated ~\cite[ros_metrics]. Thus, now might be the right time to start migrating applications from ROS 1 to ROS 2 and benefit from the new possibilities.
 
-The Chapter~\ref[jetson] focuses on setting up an NVIDIA Jetson TX2 module so that it can run ROS~2 applications.
-The emphasis is given on providing a~good developer experience in environments where the Jetson module is shared among many students and researchers.
-Thus, boot options of the Jetson modules are explored.
-Then a~solution with a~bootable SD card is presented.
+At CTU, ROS 1 has been at the heart of the autonomous driving stack used by the CTU team for the F1/10 autonomous racing competition for many years. High-speed maneuvers and racing in general are areas where many usually neglected details such as communication latency, jitter, and temporal determinism, suddenly play a significant role.
+
+{\sbf The goal} of this thesis is to migrate a selected part of the CTU's F1/10 project from ROS 1 to ROS 2, taking advantage of its new features. The result should be a working port running on ROS 2 in a simulator and on a physical model car with an NVIDIA Jetson computing module. Also, an approach for analyzing the real-time properties of the running AV stack should be presented.
+
+This thesis has two main parts. While the first three chapters cover the necessary background information and theory, the last three chapters present the contributions.
+
+First, in Chapter~\ref[jetson], both versions of ROS are briefly described while highlighting the main differences between ROS 2 and ROS 1.
+
+Second, Chapter~\ref[ros] explores tools and approaches that can be used to measure execution times, latencies, jitter, communication delays, and other parameters throughout the ROS system. Tracing using LTTng is presented as an efficient way of analyzing all of the important runtime parameters.
+
+The third and last missing piece of the background information, namely the up-to-date description of the CTU's F1/10 platform, is then presented in Chapter~\ref[f1tenth].
+
+Building on the introduced concepts, Chapter~\ref[migration] recounts the actual process of the migration, its results, and some of the encountered challenges along the way.
+
+Chapter~\ref[evaluation] focuses on the analysis of the ported stack. First, the ros2_tracing framework is extended with message flow analysis. Then, this extended tool is used to perform an analysis of communication latencies between different nodes.
 
 Finally, {\sbf the achieved results} are summarized in the last Chapter~\ref[conclusion].
+
+\sec[intro_motivation] Motivation / Why to migrate to ROS 2?
+
+Before we move on to the next chapter~\ref[ros], we would like to pause for a moment and explore some of the reasons for migrating to ROS 2.
+
+As already stated in the Introduction~\ref[intro] and as we will elaborate in Chapter~\ref[ros2], ROS 2 has been designed from the ground up, addressing some of the pain points of ROS 1, and paving the way for real-time applications. While this on its own might be a valid reason to pursue a migration to ROS 2, there are a few more reasons that can make the case for migration even stronger:
+
+\begitems
+* ROS 1 will be deprecated soon (2025)
+* There is an increasing number of ROS-2-only packages.
+* While the latest ROS 1 release (Noetic) offers a decent set of features, the CTU's F1/10 platform is, in fact, based on a now-prehistoric and (but wildly popular at the time) ROS 1 Kinetic Kame, which is now deprecated. Instead of migrating to just the latest ROS1, we can switch directly to ROS 2.
+* It is also fair to admit that there might exist valid reasons why not to migrate – they include increased complexity, greater out-of-the-box overhead, or missing (not ported) packages. Fortunately, ROS developers have worked hard to make those irrelevant.
+\enditems

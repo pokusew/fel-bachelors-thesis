@@ -23,27 +23,19 @@
 % 	\vbox to0pt{\vskip-32mm\centerline{\inspic ../../formalities/fel-bachelors-thesis-official-assignment-p2.pdf }\vss}
 % }
 
-% TODO: abstract, keywords
-
 \abstractEN {
 
-	The new version of the Robot Operating System – ROS~2 – brings significant improvements
-	over its predecessor ROS~1. We briefly describe both versions and compare their differences.
-	Then we cover the process of migrating a ROS 1 application to ROS~2 on the example of the Follow the Gap app
-	that is part of CTU's F1/10 project.
+	Performing high-speed maneuvers in autonomous driving is problematic without proper real-time support. At CTU, there is a team that competes in the F1/10 Autonomous Driving Competition with autonomous model cars. Their autonomous driving stack is based on ROS~1, which is not suitable for real-time applications.
 
-	In the next part, we focus on setting up an NVIDIA Jetson TX2 module so that it can run ROS 2 applications and
-	provide good developer experience in environments where Jetson module is shared among many students and
-	researchers.
+	The goal is to migrate this stack to ROS~2, which has been designed from the ground up to address many issues in this area. We propose tracing as an efficient way to analyze a running ROS~2 system and measure important properties.
 
-	The first result of this project is a~ROS~2 port of the Follow the Gap application. Its working is
-	demonstrated in the Stage simulator on Ubuntu and macOS. The second result is a setup guide for NVIDIA Jetson
-	TX2 that covers creating a fully-setup OS image with ROS 2 on a bootable SD card. The last result is a
-	collection of setup guides and documentation that cover various aspects of working with ROS.
+	We demonstrate the working of the migrated stack on the F1/10 model car and in the Stage simulator. We evaluate the communication latencies in the new stack using an extended version of ROS~2 tracing tools. Another result of our work is a publicly-available collection of setup guides, scripts, and documentation that covers various aspects of working with ROS. These guides have already helped several people.
+
+	We hope that the results of this thesis build a foundation that opens the way for the adoption of ROS~2 in the CTU's F1/10 stack, further improving its real-time properties, while making it more approachable by new students.
 
 }
 \keywordsEN {
-	ROS, ROS 1, ROS 2, ROS 2 migration, F1/10, Follow the Gap, autonomous model car, NVIDIA Jetson TX2
+	ROS, ROS~1, ROS~2, ROS~2 migration, F1/10, Follow the Gap, autonomous model car, autonomous driving, NVIDIA Jetson TX2, LTTng, tracing, ros2_tracing
 }
 
 \abstractCZ {
@@ -52,7 +44,7 @@
 
 }
 \keywordsCZ {
-	Tady budou klíčová slová v čekém jazyce.
+	ROS, ROS~1, ROS~2, ROS~2 migration, F1/10, Follow the Gap, model autonomního auta, autonomní řízení, NVIDIA Jetson TX2, LTTng, tracing, ros2_tracing
 }
 
 \thanks {
@@ -99,11 +91,12 @@
 
 % contents
 \input 1-introduction
-\input 2-ros
-\input 3-f1tenth
-\input 4-follow-the-gap
-\input 5-jetson
-\input 6-conclusion
+% \input 2-ros
+% \input 3-tracing
+% \input 4-f1tenth
+% \input 5-migration
+% \input 6-evaluation
+% \input 7-conclusion
 
 % appendices
 \input appendices
