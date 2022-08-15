@@ -9,14 +9,20 @@
 \title {Using ROS 2 for High-Speed Maneuvering in Autonomous Driving}
 \titleCZ {Použití ROS 2 pro manévrování ve vysoké rychlosti v autonomním řízení}
 \author {Martin Endler}
-\date {July 2022}  % TODO: maybe change to August 2022
+\date {August 2022}
 
 \supervisor {Ing. Michal Sojka, Ph.D.}
 \studyinfo  {Open Informatics – Artificial Intelligence and Computer Science}
-\workinfo   {\url{https://github.com/pokusew/fel-bachelors-thesis}}  % TODO: use final URL here
+\workinfo   {\url{https://github.com/pokusew/fel-bachelors-thesis}}
+
+% The two PDF Assigment pages after the Title Page
+\specification {
+	\vbox to0pt{\vskip-32mm\centerline{\inspic ../../formalities/fel-bachelors-thesis-official-assignment-p1.pdf }\vss}
+	\vfil\break
+	\vbox to0pt{\vskip-32mm\centerline{\inspic ../../formalities/fel-bachelors-thesis-official-assignment-p2.pdf }\vss}
+}
 
 % TODO: abstract, keywords
-% TODO: consider switiching the position of abstractCZ/keywordsCZ with abstractEN/keywordsEN in the template
 
 \abstractEN {
 
@@ -41,37 +47,36 @@
 
 \abstractCZ {
 
-	The new version of the Robot Operating System – ROS~2 – brings significant improvements
-	over its predecessor ROS~1. We briefly describe both versions and compare their differences.
-	Then we cover the process of migrating a ROS 1 application to ROS~2 on the example of the Follow the Gap app
-	that is part of CTU's F1/10 project.
-
-	In the next part, we focus on setting up an NVIDIA Jetson TX2 module so that it can run ROS 2 applications and
-	provide good developer experience in environments where Jetson module is shared among many students and
-	researchers.
-
-	The first result of this project is a~ROS~2 port of the Follow the Gap application. Its working is
-	demonstrated in the Stage simulator on Ubuntu and macOS. The second result is a setup guide for NVIDIA Jetson
-	TX2 that covers creating a fully-setup OS image with ROS 2 on a bootable SD card. The last result is a
-	collection of setup guides and documentation that cover various aspects of working with ROS.
+	Tady bude abstrakt v českém jazyce.
 
 }
 \keywordsCZ {
-	ROS, ROS 1, ROS 2, ROS 2 migration, F1/10, Follow the Gap, autonomous model car, NVIDIA Jetson TX2
+	Tady budou klíčová slová v čekém jazyce.
 }
 
-% TODO: expand (Tomáš + UPenn)
 \thanks {
-	I would like to thank my supervisor Ing.~Michal~Sojka,~Ph.D. for his guidance and support.
-	Also, I would like to thank Ing.~Jaroslav~Klapálek for providing valuable information
-	and advice regarding the F1/10 project.
+	First of all, I would like to thank my~supervisor Ing.~Michal~Sojka,~Ph.D.
+	\nl for his guidance, support, and immense patience.
+
+	Second, I would like to thank Ing.~Jaroslav Klapálek for providing valuable
+	information and advice regarding the F1/10 project.
+
+	Next, I would like to thank Bc.~Tomáš Nagy for his help with all sorts of mechanical stuff,
+	explaining AV algorithms, building a new CTU's F1/10 model,
+	and for all his support during our joint internship at the \nobreak{University} of Pennsylvania.
+
+	Last but not least, I would like to thank Prof.~Rahul~Mangharam
+	for \nobreak{providing} a stimulating environment during my internship
+	at his lab at the \nobreak{University} of Pennsylvania.
+
+	Finally, I would like to thank my \nobreak{family} and close friends for always supporting me throughout my studies.
 }
 \declaration {
 	I declare that the presented work was developed independently and that I have listed all sources of information
 	used within it in accordance with the methodical instructions for observing the ethical principles in the
 	preparation of university theses.
 
-	Prague, August 15, 2022  % TODO: verify the date is correct, also consider using "In Prague, ..."
+	Prague, August 15, 2022
 	\signature % makes dots
 }
 
