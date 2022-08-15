@@ -1,14 +1,8 @@
 \chap[f1tenth] CTU's F1/10 Platform
 
-The F1/10 platform is a~scaled-down (1:10) model of an autonomous car that originates from F1/10 Autonomous
-Racing Competition. Thanks to its affordability and similarity to a real car, the platform can be easily used for
-development, testing and verification of autonomous driving systems and related algorithms. At CTU, multiple F1/10
-models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. {\em
-Currently}, all of them are based on NVIDIA Jetson computing modules and powered by ROS~1 Kinetic Kame.
+The F1/10 platform is a scaled-down (1:10) model of an autonomous car that originates from F1/10 Autonomous Racing Competition (TODO: add ref or footnote). Thanks to its affordability and similarity to a real car, the platform can be easily used for the development, testing, and verification of autonomous driving systems and related algorithms.
 
-Throughout this project, we worked with the third model ("tx2-auto-3") which is based on NVIDIA Jetson TX2.
-The model is shown in the Figure~\ref[img_tx2_auto_3]. The further descriptions of hardware stack are specific to
-this model.
+At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-3"~\ref[img_tx2_auto_3] and "tx2-auto-usa"\footnote{This was designed by a fellow student, Tomáš Nagy. The main difference compared to the tx2-auto-3 is its chassis design (components' placement and mounting). The usa suffix in the model name refers to the fact that this model was assembled in the USA during our (my and Tomas Nagy's) internship at the University of Pennsylvania.}. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a description is a prerequisite for a successful migration to ROS 2 ~\ref[migration].
 
 \midinsert
 \clabel[img_tx2_auto_3]{The CTU's Third F1/10 Model Car}
@@ -19,15 +13,21 @@ this model.
 
 \sec Hardware Stack
 
-The most notable components (with respect to this project) are:
+The platform is based on an off-the-shelf RC car model from Traxxas (i.e., Traxxas Slash, but different ones can be used as well) with added components that enable autonomous operation (sensors, computers). The following table/list provides a quick overview of those components, which are then described in detail in the next sections. The diagram (ref diagram) shows the functional relationships among them.
+
 \begitems
-* NVIDIA Jetson TX2 Module – The central computing unit that runs the autonomous driving stack.
-* Orbitty Carrier – A carrier board for the NVIDIA Jetson TX2 Module.
-* VESC – Electric Speed Controller that control the engine.
-* Teensy MCU – An auxiliary microcontroller for controlling the steering and handling the communication
-with an RC Transmitter (Manual Control).
-* Hokuyo UST-10LX – LIDAR
+* NVIDIA Jetson TX2  – The main computing unit that runs the autonomous driving stack.
+* VESC (Enertion FOCBOX VESC-X)– Electric Speed Controller (ESC) that controls the BLDC motor.
+* Teensy 3.2 – A microcontroller (MCU) for controlling the steering and handling the communication with an RC Transmitter (Manual Control). It also implements an independent emergency stop (eStop).
+* Hokuyo UST-10LX – LiDAR
+* SparkFun 9DoF Razor IMU M0 – IMU
 \enditems
+
+\midinsert
+\clabel[ctu_f1tenth_hw_diagram]{Functional Diagram}
+\picw=8cm \cinspic ../images/ctu-f1tenth-v5-e.pdf
+\caption/f Overview of main components with depicted methods of communication. The yellow blocks are part of the low-level system, which always works independently of the main high-level system (NVIDIA Jetson TX2).
+\endinsert
 
 
 \sec Software Stack
