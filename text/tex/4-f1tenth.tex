@@ -32,23 +32,3 @@ The platform is based on an off-the-shelf RC car model from Traxxas (i.e., Traxx
 
 \sec Software Stack
 
-The software of stack is based on Ubuntu 16 (NVIDIA JetPack 3.x) and ROS~1 Kinetic Kame. The goal of this project
-is to migrate the stack to ROS~2 Foxy Fitzroy. The migration comprises not only of porting the actual code to ROS~2
-(which is done in Chapter~\ref[follow_the_gap]), but also of setting up the NVIDIA Jetson TX2 so that it can run ROS~2
-(which is done in Chapter~\ref[jetson]).
-
-The CTU F1/10 platform consists of multiple components that can be used in various combinations
-to support different applications. A detailed overview of the CTU F1/10 platform architecture can be found
-in the Section 4.3.2 of~\cite[klapalek_avoidance_2019].
-
-Because migrating all the code of CTU F1/10 platform at once would not be smart, we need to select some part of
-it that we will actually try to migrate. Such part should meet at least the following criteria:
-\begitems
-* It is possible to easily demonstrate its working in a simulator and on the real model.
-* It contains minimal number of dependencies.
-* It represents a typical autonomous driving application. That means reading data from sensor(s) (LIDAR), analyzing the
-data (perception), planning a trajectory (decision and control) and controlling the vehicle.
-\enditems
-
-All these criteria all met by the {\em Follow the Gap} application which is a part of the CTU F1/10 platform.
-It implements the Follow the Gap algorithm that was introduced in ~\cite[paper_follow_the_gap].
