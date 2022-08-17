@@ -2,6 +2,6 @@
 
 After we migrated the stack, we tried to evaluate some of its properties. Especially, communication latencies (and the jitter) and execution times throughout the AV pipeline.
 
-We used "ros2_tracing" framework. However, we decided to extend its analysis capabilities by integrating the work from~\ref[ros2_message_flow_analysis]. This was necessary in order to for us to able to match the corresponding publication of messages with subscription invocations. After doing this matching we can compute communication latencies in the system correctly. Being able to reconstruct complete causal relationships in the system also enables us analyze application-specific end-to-end latency (time from perception to the corresponding control command).
+We used "ros2_tracing" framework. However, we decided to extend its analysis capabilities by integrating the work from~\cite[ros2_message_flow_analysis]. This was necessary in order to for us to able to match the corresponding publication of messages with subscription invocations. After doing this matching we can compute communication latencies in the system correctly. Being able to reconstruct complete causal relationships in the system also enables us analyze application-specific end-to-end latency (time from perception to the corresponding control command).
 
 Please refer to the "pokusew/ros2-tracing-experiments"\urlnote{https://github.com/pokusew/ros2-tracing-experiments} for the full description of the experiments we performed.
