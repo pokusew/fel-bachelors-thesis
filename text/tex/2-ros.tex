@@ -1,27 +1,17 @@
 \chap[ros] Robot Operating System
 
-In this chapter, we describe both versions of ROS – ROS 1 and ROS 2, focusing on the latter in more detail. We also highlight the main differences.
+In this chapter, we describe both versions of ROS, ROS~1 and ROS~2, focusing on the latter in more detail. We also highlight the main differences.
 
-The Robot Operating System (or ROS) is “an open-source, meta-operating system”~\cite[ros1_intro] that consists of “tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot applications across a wide variety of robotic platforms”~\cite[ros2_foxy_root].
+The Robot Operating System (or ROS) is “an open-source, meta-operating system”~\cite[ros1_intro] that consists of “tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot applications across a~wide variety of robotic platforms”~\cite[ros2_docs].
 
-A~typical ROS application is composed of loosely coupled processes – {\sbf nodes} – (potentially distributed across
-machines) that communicate with each other and work together to accomplish a~certain goal (for example,
-autonomous vehicle control). Each node performs only a~limited set of specific functions {\em(e.g.: one node
-can read data~from LIDAR, another node can implement an obstacle detection algorithm from the LIDAR data,
-while another node can use the detected obstacles to plan the trajectory, etc.)}.
+A typical ROS application is composed of loosely coupled processes – {\sbf nodes} – (potentially distributed across machines) that communicate with each other and work together to accomplish a~certain goal (for example, autonomous vehicle control). Each node performs only a~limited set of specific functions {\em(e.g., one node can read data from LiDAR, another node can implement an obstacle detection algorithm from the LiDAR data, while another node can use the detected obstacles to plan the trajectory, etc.)}.
 
-Such architecture greatly supports the separations of concerns and allows code reuse. That further enables
-efficient code sharing of common functionality among different projects with various applications. That in
-fact, is one of the most significant features of ROS as there are thousands of ROS packages provided by the
-ROS community~\cite[ros_index_stats]. Developers can focus on their application-specific problems while reusing code
-for common parts.
+Such architecture greatly supports the separations of concerns and allows code reuse. That further enables efficient code sharing of common functionality among different projects with various applications. That, in fact, is one of the most significant features of ROS, as there are thousands of ROS packages provided by the ROS community~\cite[ros_index_stats]. Developers can focus on their application-specific problems while reusing code for common parts.
 
 
 \sec[ros_graph] ROS Computation Graph
 
-At runtime, ROS nodes and their communication interactions form so called “ROS Computation
-Graph”~\cite[ros1_concepts]. The nodes are represented by the graph's vertices, while the edges
-depicts the communication interactions.
+At runtime, ROS nodes and their communication interactions form the so-called “ROS Computation Graph”~\cite[ros1_concepts]. The nodes are represented by the graph's vertices, while the edges depict the communication interactions.
 
 \midinsert
 \clabel[img_ros_graph]{A ROS Computation Graph}
@@ -41,264 +31,153 @@ ROS provides several {\em communication primitives} that can be used by nodes:
 \begitems \style n
 
 * {\sbf messages and topics} – publish/subscribe \nl
-Nodes (publishers) can publish messages to a~named topic. Other nodes (subscribers) can subscribe to a
-topic and receive the published messages.
+Nodes (publishers) can publish messages to a~named topic. Other nodes (subscribers) can subscribe to a~topic and receive the published messages.
 
 * {\sbf services} – synchronous RPC (Remote Procedure Call) (server/client) \nl
-Nodes (service servers) can provide services. Service have names. Other nodes (service clients) can
-invoke/call services and synchronously get results.
+Nodes (service servers) can provide services. Services have names. Other nodes (service clients) can invoke/call services and synchronously get results.
 
 * {\sbf actions} – asynchronous preemptible RPC with continuous feedback (server/client) \nl
-Node (action servers) can provide actions. An action is preemptible task that has a~goal, can provide
-continuous feedback and returns a~result if it is not cancelled. Other nodes (action clients) can invoke an
-action (request a~goal and subscribe for its feedback and result).
+Node (action servers) can provide actions. An action is a~preemptible task that has a~goal, can provide continuous feedback, and returns a~result if it is not canceled. Other nodes (action clients) can invoke an action (request a~goal and subscribe for its feedback and result).
 
 \enditems
 
-The communication is strongly typed and ROS provides an interface description language (IDL) for describing
-message types (used for pub/sub), service types and action types.
-
+The communication is strongly typed, and ROS provides an interface description language (IDL) for describing message types (used for pub/sub), service types, and action types.
 
 \sec[ros_concepts] ROS Common Concepts
 
-In addition to the Computation Graph and communication possibilities, both versions of ROS share many additional common
-concepts, some of which are described below:
+In addition to the Computation Graph and communication possibilities, both versions of ROS share many additional common concepts, some of which are described below:
 \begitems
 
-* {\sbf Package} – a~container for code, IDL files (messages, services, actions), configuration files or anything
-else. It is “the most atomic build and release item” that groups together common functionality that can be
-easily shared and reused~\cite[ros1_concepts]. Each package has a~package manifest file "package.xml"
-that provides “metadata~about a~package, including its name, version, description, license information,
-dependencies, etc.“. There are currently 3 package manifest formats, which are defined
-in REP-127\urlnote{https://ros.org/reps/rep-0127.html}, REP-140\urlnote{https://ros.org/reps/rep-0140.html}
-and REP-149\urlnote{https://ros.org/reps/rep-0149.html} respectively.
+* {\sbf Package} – Package – a~container for code, IDL files (messages, services, actions), configuration files, or anything else. It is “the most atomic build and release item” that groups together common functionality that can be easily shared and reused~\cite[ros1_concepts]. Each package has a~package manifest file "package.xml" that provides “metadata about a~package, including its name, version, description, license information, dependencies, etc.“. There are currently 3 package manifest formats, which are defined in REP 127\urlnote{https://ros.org/reps/rep-0127.html}, REP 140\urlnote{https://ros.org/reps/rep-0140.html}, and REP 149\urlnote{https://ros.org/reps/rep-0149.html}, respectively.
 
-* {\sbf Distribution} – “a~versioned set of ROS packages~\cite[ros1_distros]. ROS~1 distributions are
-listed at~\cite[ros1_distros], ROS~2 distributions are listed at~\cite[ros2_distros].
+* {\sbf Distribution} – “a versioned set of ROS packages~\cite[ros1_distros]. ROS~1 distributions are listed at~\cite[ros1_distros], ROS~2 distributions are listed at~\cite[ros2_distros].
 
-* {\sbf Workspace} – a~directory containing packages that are built together using a~ROS build tool
-(such as "catkin_make", "catkin_make", "catkin_make_isolated", "catkin_tools", "colcon") and a~build system
-(such as "catkin" or "ament").
+* {\sbf Workspace} – a~directory containing packages that are built together using a~ROS build tool (such as "catkin_make", "catkin_make", "catkin_make_isolated", "catkin_tools", "colcon") and a~build system (such as "catkin" or "ament").
 
-* {\sbf Graph Resource Names} – “a~hierarchical naming structure that is used for all resources in a~ROS
-Computation Graph, such as Nodes, Parameters, Topics, and Services”~\cite[ros1_concepts].
+* {\sbf Graph Resource Names} – “a hierarchical naming structure that is used for all resources in a~ROS Computation Graph, such as Nodes, Parameters, Topics, and Services”~\cite[ros1_concepts].
 
-* {\sbf Package Resource Names} – a~simplified method of “referring to files and data~types on
-disk”~\cite[ros1_concepts]. It consists of the name of the package that the resource is in plus
-the name of the resource. For example, the name "std_msgs/String" refers to the "String" message type in the
-"std_msgs" package.
+* {\sbf Package Resource Names} – a~simplified method of “referring to files and data types on disk”~\cite[ros1_concepts]. It consists of the name of the package that the resource is in plus the name of the resource. For example, the name "std_msgs/String" refers to the "String" message type in the "std_msgs" package.
 
-* {\sbf ROS client library} – a~collection of code that simplifies the task of implementing of a~ROS node in a
-certain programming language. “It takes many of the ROS concepts and makes them accessible via
-code”~\cite[ros1_client_libs]. It provides an API (functions, methods, classes) that allows
-to interact with other nodes (using pub/sub, services, actions and parameters) and do other common things.
-The main ROS client libraries are for C++ and for Python. The internal architecture of client libraries differs
-greatly between ROS~1 and ROS~2.
+* {\sbf ROS client library} – a~collection of code that simplifies the task of implementing a~ROS node in a~certain programming language. “It takes many of the ROS concepts and makes them accessible via code”~\cite[ros1_client_libs]. It provides an API (functions, methods, classes) that allows a~user program to interact with other nodes (using pub/sub, services, actions, and parameters) and do other common things. The main ROS client libraries are for C++ and for Python. The internal architecture of client libraries differs greatly between ROS~1 and ROS~2.
 
 \enditems
 
 
 \sec ROS~1
 
-ROS 1 is the original version of ROS that dates back to 2007. Version 1.0 was published in 2010. Since then, 13 ROS 1 distributions have been released~\cite[ros1_distros]. The latest ROS 1 version, Noetic, was released in 2020. There are no plans to release any new ROS 1 versions besides Noetic. Its support will end in May 2025. After that date, ROS 1 will be effectively deprecated.
+ROS~1 is the original version of ROS that dates back to 2007~\cite[ros_history]. Version 1.0 was published in 2010. Since then, 13 ROS~1 distributions have been released~\cite[ros1_distros]. The latest ROS~1 version, Noetic, was released in 2020. There are no plans to release any new ROS~1 versions besides Noetic. Its support will end in May 2025. After that date, ROS~1 will be effectively deprecated.
 
 Full documentation of ROS~1 can be found at ~\cite[ros1_docs].
 
 
 \secc Architecture
 
-In ROS~1 ROS Computation Graph, there always must be a~special node called {\em ROS~Master}. It provides name
-registration and lookup services to the rest of the Computation Graph. It coordinates the communication among
-the nodes. That includes graph changes notifications and establishing of connections connection between nodes.
-It offers two XML-RPC based APIs – Master API and Parameter Server API.
+In ROS~1's Computation Graph, there must always be a~special node called {\em ROS~Master}. It provides name registration and lookup services to the rest of the Computation Graph. It coordinates the communication among the nodes. That includes graph changes notifications and establishing connections between nodes. It offers two XML-RPC-based APIs – Master API and Parameter Server API.
 
-ROS~1 has a~concept of central key/value data storage called {\em Parameter~Server}. It is currently part of
-ROS Master (Parameter Server API). A~key/value pair is called parameter. All nodes in the Computation Graph
-can get and manipulate the key/value data stored in the Parameter Server. The parameters can be used as
-configuration storage for nodes, which allows easy altering of the system (nodes') behavior at runtime.
+ROS~1 has a~concept of central key/value data storage called {\em Parameter~Server}. It is a~part of ROS Master (Parameter Server API). a~key/value pair is called a~parameter. All nodes in the Computation Graph can get and manipulate the key/value data stored in the Parameter Server. The parameters can be used as configuration storage for nodes, which allows easy altering of the system (nodes') behavior at runtime.
 
-ROS~1 offers two underlying data~transports protocols – {\em TCPROS} and {\em UDPROS}. As the names suggest,
-they are based on TCP and UDP respectively.
+ROS~1 offers two underlying data transport protocols – {\em TCPROS} and {\em UDPROS}. As the names suggest, they are based on TCP and UDP, respectively.
 
-	{\sbf All concepts are implemented directly (natively) in ROS~1 Client Libraries.} The two main client libraries
-are {\sbf roscpp} (for C++) and {\sbf rospy} (for Python). Their performance and features availability varies
-greatly. While the C++ ROS~1 Client Library implements all ROS~1 features and provides high performance, the
-Python ROS~1 Client Library lacks some features and provides worse performance. Even when a~feature is
-available in both libraries, the actual implementation often comes with minor differences that might not be
-expected.
+{\sbf All concepts are implemented directly (natively) in ROS~1 Client Libraries.} The two main client libraries are {\sbf roscpp} (for C++) and {\sbf rospy} (for Python). Their performance and features' availability varies greatly. While the C++ ROS~1 Client Library implements all ROS~1 features and provides high performance, the Python ROS~1 Client Library lacks some features and provides worse performance. Even when a~feature is available in both libraries, the actual implementation often comes with minor differences that might not be expected.
 
 % TODO: It would be nice to have ROS~1 architecture digram here (user code + client lib)
 
 
 \secc Build System
 
-ROS~1 uses catkin build system\fnote{In older ROS~1 distributions, rosbuild was used. It is also (theoretically)
-	possible to use ROS~2 build tool colcon to build ROS~1 workspace.}. Catkin supports CMake packages that uses
-special catkin CMake macros. The actual build is controlled by a~build tool. ROS~1 catkin
-workspace can be built using different build tools – "catkin_make", "catkin_make_isolated", "catkin_tools".
+ROS~1 uses catkin build system\fnote{In older ROS~1 distributions, rosbuild was used. It is also (theoretically) possible to use ROS~2 build tool colcon to build ROS~1 workspace.}. Catkin supports CMake packages that use special catkin CMake macros. The actual build is controlled by a~build tool. ROS~1 catkin workspace can be built using different build tools – "catkin_make", "catkin_make_isolated", "catkin_tools".
 
 
 \secc CLI
 
-The CLI is composed of several commands that covers all ROS~1 features. These include for example
-"rostopic", "rosservice", "rosparam", "rosmsg", "rosrun", "roslaunch", etc. ~\cite[ros1_cli].
+The CLI is composed of several commands that cover all ROS~1 features. These include, for example "rostopic", "rosservice", "rosparam", "rosmsg", "rosrun", "roslaunch", etc.~\cite[ros1_cli].
 
 
 \secc Launch System
 
-While nodes can be started manually (via~running the corresponding executables), it~may be cumbersome
-in~a~complex system. For this reason, ROS~1 allows describing the system using a~special XML file. Then the
-command "roslaunch" handles the process of starting up all nodes
-and supplying correct arguments to them~\cite[ros1_launch].
+While nodes can be started manually (via running the corresponding executables), it may be cumbersome in a~complex system. For this reason, ROS~1 allows describing the system using a~special XML file. Then the command "roslaunch" handles the process of starting up all nodes and supplying correct arguments to them~\cite[ros1_launch].
 
 
 \sec[ros2] ROS~2
 
-“Since ROS was started in 2007, a~lot has changed in the robotics and ROS community. The goal of the ROS~2
-project is to adapt to these changes, leveraging what is great about ROS~1 and improving what is
-not.”~\cite[ros2_foxy_root]
+“Since ROS was started in 2007, a~lot has changed in the robotics and ROS community. The goal of the ROS~2 project is to adapt to these changes, leveraging what is great about ROS~1 and improving what is not.”~\cite[ros2_docs]
 
 Full documentation of the latest ROS~2 release can be found at ~\cite[ros2_docs].
 
 
 \secc Architecture
 
-The architecture of ROS~2 was designed from the ground up addressing issues of ROS~1~\cite[ros2_design_why].
-The newly designed architecture should address new use-cases as well as many issues from ROS~1:
+The architecture of ROS~2 was designed from the ground up, addressing issues of ROS~1~\cite[ros2_design_why]. The newly designed architecture should address new use-cases as well as many issues from ROS~1:
 \begitems
-* truly distributed system (no master node)
-* support for real-time
-* more nodes in one process (composable nodes)
-* better support for communication in non-ideal networks
-* small embedded platforms support
+* Truly distributed system (no master node).
+* Support for real-time.
+* More nodes in one process (Composable nodes).
+* Better support for communication in non-ideal networks.
+* Small embedded platforms support.
 \enditems
 
 \midinsert
 \clabel[img_ros2_architecture]{ROS~2 Architecture}
 \picw=14.5cm \cinspic ../images/ros2-client-library-api-stack.png
-\caption/f ROS~2 Architecture~\cite[ros2_foxy_internal].
+\caption/f ROS~2 Architecture~\cite[ros2_docs_internal_interfaces].
 \endinsert
 
-While ROS~1 communications stack is built almost entirely from scratch, ROS~2 relies on {\em Data~Distribution
-Service} (DDS). DDS is “a~middleware protocol and API standard for data-centric connectivity from the Object
-Management Group (OMG). It provides low-latency data~connectivity, extreme reliability, and a~scalable
-architecture for Internet of Things applications need”~\cite[omg_what_is_dds].
+While ROS~1's communications stack is built almost entirely from scratch, ROS~2 relies on {\em Data Distribution Service} (DDS). DDS is “a middleware protocol and API standard for data-centric connectivity from the Object Management Group (OMG). It provides low-latency data connectivity, extreme reliability, and a~scalable architecture for Internet of Things applications need”~\cite[omg_what_is_dds].
 
-ROS~2 Client Libraries have a~different architecture compared to the ROS~1 ones. Instead of reimplementing all
-the features in all the programming languages separately, the common functionality is implemented in {\em rcl} library
-that exposes a~C API. Client Libraries then use {\em rcl} library and implement the rest of the features on top of it
-(in particular, language-dependent features, such as threading and execution model).
+ROS~2 Client Libraries have a~different architecture compared to the ROS~1 ones. Instead of reimplementing all the features in all the programming languages separately, the common functionality is implemented in the {\em rcl} library that exposes a~C API. Client Libraries then use the {\em rcl} library and implement the rest of the features on top of it (in particular, language-dependent features, such as threading and execution model).
 
-Because ROS~2 supports different DDS implementations from different vendors~\cite[ros2_foxy_dds],
-rcl library cannot directly communicate with the DDS implementation. Instead, there is an abstraction layer
-called  {\em rmw} (ROS middleware) that provides a~unified accesses to DDS. The specific DDS implementation can be
-even supplied dynamically at runtime.
+Because ROS~2 supports different DDS implementations from different vendors~\cite[ros2_docs_dds_vendors], the rcl library cannot directly communicate with the DDS implementation. Instead, there is an abstraction layer called {\em rmw} (ROS middleware) that provides unified access to DDS. The specific DDS implementation can even be changed dynamically at runtime.
 
-The whole relationship among different parts of ROS~2 Client Libraries
-is shown in the Figure~\ref[img_ros2_architecture].
-Additional detailed information can be found at~\cite[ros2_foxy_internal].
+The whole relationship among different parts of ROS~2 Client Libraries is shown in Figure~\ref[img_ros2_architecture]. Additional detailed information can be found at~\cite[ros2_docs_internal_interfaces].
 
 
 \secc Build System
 
-ROS~2 uses ament as build system and colcon as build tool. Ament supports three types of packages: CMake with
-"ament_cmake", pure Python packages (Python setuptools based) and pure CMake packages. Colcon always builds all
-packages in isolation and in a~correct order. For ensuring the correct build order, a~dependencies graph is
-constructed which must be a~directed acyclic graph in order for the workspace to be buildable. It also tries
-to parallelize the build up to the level that mutual dependencies among packages allow.
+ROS~2 uses ament as a~build system and colcon as a~build tool. Ament supports three types of packages: CMake with "ament_cmake", pure Python packages (Python setuptools based), and pure CMake packages. Colcon always builds all packages in isolation and in the correct order. For ensuring the correct build order, a~dependencies graph is constructed, which must be a~directed acyclic graph in order for the workspace to be buildable. It also tries to parallelize the build up to the level that mutual dependencies among packages allow.
 
 
 \secc CLI
 
-It is very similar to ROS~1 CLI but instead of having multiple commands, ROS~2 has one central command "ros2"
-that has several subcommands.
+It is very similar to ROS~1 CLI, but instead of having multiple commands, ROS~2 has one central command, "ros2," with several subcommands.
+
 
 \secc Launch System
 
-ROS~2 Launch System was redesigned. Currently, it uses Python 3 code to describe the system to
-launch~\cite[ros2_foxy_launch, ros2_design_launch].
+The Launch System has been completely redesigned to support the new concepts in ROS~2. It is implemented in Python, and it provides a~way to {\em declaratively} describe the system to launch~\cite[ros2_docs_launch, ros2_design_launch].
+Launch files can be written in Python, XML, or YAML. Python-based launch files represent the most powerful and comfortable\fnote{Since Python-based launch files are just Python code, one can take advantage of IDEs' powerful auto-completion and coding assistance features.} method of describing a~system to launch. In fact, the other supported formats, XML and YAML, directly map to the Launch System's Python API.
+
+Because of their declarative nature, Python-based launch files might be quite verbose and even might seem counter-intuitive and restrictive at first. But the declarative approach brings many advantages. “By separating the declaration of an action from the execution of an action, tools may use the launch descriptions to do things like visualize what a~launch description will do without actually doing it.”~\cite[ros2_design_launch] This is used for example by "ros2 launch" command to determine and print launch arguments of a~launch file. It is also the reason why it is possible to map some of the Launch System declarative APIs to declarative languages such as XML and YAML.
 
 \medskip
 
+
 \sec Summary of Differences between ROS~1 and ROS~2
 
-ROS~2 has better architecture and offers more features. Thanks to DDS and its fine-grained QoS, ROS~2 handles
-communication in non-ideal networks better than ROS~1. Furthermore, the ROS~2 client libraries offer better control
-over code execution and threading as they support writing custom executors. ROS~2 architecture is designed with
-real-time support in mind\fnote{Although the actual Real-Time properties may differ dramatically based on various
-configuration and threading/execution model choice.}. The following list summarizes the most notable differences
-between ROS~1 and ROS~2:
+ROS~2 has better architecture and offers more features. Thanks to DDS and its fine-grained QoS, ROS~2 handles communication in non-ideal networks better than ROS~1. Furthermore, the ROS~2 client libraries offer better control over code execution and threading as they support writing custom executors. ROS~2 architecture is designed with real-time support in mind.\fnote{Although the actual real-time properties may differ dramatically based on various configuration and threading/execution model choices.}
 
-% TODO: Tables do not support multiline text in cells?
+The following table summarizes the most notable differences between ROS~1 and ROS~2:
 
-% TODO: Improve the differences list.
+% TODO: Improve the summary table.
 
-\begitems
+\midinsert
 
-* Supported Platforms
-\begitems \style x
-* {\em ROS~1:} Only Ubuntu officially supported.
-* {\em ROS~2:} Ubuntu, macOS, Windows officially supported. Yet, a~lot of packages work only on Ubuntu.
-\enditems
+\clabel[ros_comparison]{Summary of ROS~2 features compared with ROS~1.}
 
-* Client Libraries
-\begitems \style x
-* {\em ROS~1:} roscpp (C++03), rospy (Python 2, in later distributions Python 3)
-* {\em ROS~2:} rclcpp (C++14), rclpy (Python 3)
-\enditems
+\ctable{p{27mm\fL}p{47mm\fC}p{47mm\fC}}{
+	{\sbf Category} & {\sbf ROS~1} & {\sbf ROS~2} \crll
+	{\sbf Supported\nl Platforms} & Only Ubuntu officially supported. & Ubuntu, Windows, and macOS officially supported. Yet, a~lot of packages work only on Ubuntu. \crl
+	{\sbf Client Libraries} & Written independently in each language. & Sharing a~common underlying C library (rcl). \crl
+	{\sbf Transport} & TCPROS or UDPROS & Handled by DDS which offers fine-grained QoS. \crl
+	{\sbf Real-Time\nl Support} & No. Not part of the design. & Yes. One of the design goals. \crl
+	{\sbf Runtime Node Composition} & No. But Nodelets can be used. & Yes. Composable Nodes. \crl
+	{\sbf Threading and \nl Execution Model} & not much customizable & granular execution models, custom executors \crl
+	{\sbf Parameters} & global parameter server & parameters per node (no global parameter server), out-of-the-box dynamic_reconfigure-like features \crl
+	{\sbf Communication Primitives} & pub/sub, services, actions (not natively, but via "actionlib") &   pub/sub, services, actions \crl
+	{\sbf IDL} & ".msg"/".srv" & ".msg"/".srv"/".action" + extended features such as constraints \crl
+	{\sbf Launch System} & XML-based launch files & extensible, Python-based, XML and YAML supported as well \crl
+	{\sbf Build} & "catkin" + "catkin_make" or "catkin_make_isolated" & "ament" + "colcon" \cr
+}
 
-* Real-Time Support
-\begitems \style x
-* {\em ROS~1:} no
-* {\em ROS~2:} yes
-\enditems
+\caption/t Summary of ROS~2 features compared with ROS~1. Inspired by~\cite[paper_ros2].
 
-* Runtime Node Composition
-\begitems \style x
-* {\em ROS~1:} No. But Nodelets can be used.
-* {\em ROS~2:} Yes. Composable Nodes.
-\enditems
-
-* Parameters
-\begitems \style x
-* {\em ROS~1:} global parameter server
-* {\em ROS~2:} parameters per node (no global parameter server), out-of-the-box dynamic_reconfigure-like features
-\enditems
-
-* Launch System
-\begitems \style x
-* {\em ROS~1:} XML-based
-* {\em ROS~2:} Python-based
-\enditems
-
-* Transport
-\begitems \style x
-* {\em ROS~1:} TCPROS or UDPROS
-* {\em ROS~2:} Handled by DDS which offers fine-grained QoS.
-\enditems
-
-* Communication Primitives
-\begitems \style x
-* {\em ROS~1:} pub/sub, services, actions (not natively, but via actionlib)
-* {\em ROS~2:} pub/sub, services, actions
-\enditems
-
-* Threading and Execution Model
-\begitems \style x
-* {\em ROS~1:} not much customizable
-* {\em ROS~2:} granular execution models, custom executors
-\enditems
-
-* Build
-\begitems \style x
-* {\em ROS~1:} catkin + catkin_make/catkin_make_isolated
-* {\em ROS~2:} ament + colcon
-\enditems
-
-* IDL
-\begitems \style x
-* {\em ROS~1:} ".msg"/".srv"
-* {\em ROS~2:} ".msg"/".srv"/".action" + extended features such as constraints
-\enditems
-
-\enditems
+\endinsert

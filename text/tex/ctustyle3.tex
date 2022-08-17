@@ -1,12 +1,12 @@
 % ctustyle3.tex -- the template for typesetting theses at CTU in Prague
 % ---------------------------------------------------------------------
-% Petr Olsak  Aug. 2020,  (derived from ctustyle.tex, Jan. 2015) 
+% Petr Olsak  Aug. 2020,  (derived from ctustyle.tex, Jan. 2015)
 
 \useOpTeX % Use OpTeX format
 
 \_def\ctustyleversion{May.2022 beta(r)}
 
-\_message{CTUstyle3: Thesis at Czech Technical University in Prague, 
+\_message{CTUstyle3: Thesis at Czech Technical University in Prague,
           <\ctustyleversion>}
 
 \_namespace{ctustyle}
@@ -42,7 +42,7 @@
 }
 \_def\makefront{%
    \_ifx\.mainlanguage\_undefined
-      \.ERR {The \_string\worktype[<type>/<lang>] command 
+      \.ERR {The \_string\worktype[<type>/<lang>] command
                     is missing before \_string\makefront}\_fi
    \_everypar={}
    \.mandatorydecl\faculty
@@ -62,7 +62,7 @@
    \_edef\.tmpa{:F1:F2:F3:F4:F5:F6:F7:F8:MUVS:}
    \_edef\.tmpb{\_noexpand\_isinlist\_noexpand\.tmpa{:\_the\faculty:}}\.tmpb
    \_iftrue \_else
-      \.ERR {The \_noexpand\faculty {\_the\faculty} 
+      \.ERR {The \_noexpand\faculty {\_the\faculty}
                     is not in the list F1, F2, ..., F8, MUVS}%
    \_fi
 }
@@ -82,8 +82,8 @@
   \_fi
 }
 
-\.mtdef {ctu}   {CZECH TECHNICAL\nl UNIVERSITY\nl IN PRAGUE} 
-                {ČESKÉ VYSOKÉ\nl UČENÍ TECHNICKÉ\nl V PRAZE} {} 
+\.mtdef {ctu}   {CZECH TECHNICAL\nl UNIVERSITY\nl IN PRAGUE}
+                {ČESKÉ VYSOKÉ\nl UČENÍ TECHNICKÉ\nl V PRAZE} {}
 % The name of University/Faculty is in Czech even if the document is in Slovak
 \.mtdef {F1}    {Faculty of Civil Engineering}
                 {Fakulta stavební} {}
@@ -105,8 +105,8 @@
                 {Masarykův ústav vyšších studií} {}
 
 \.mtdef {abstract}     {Abstract}          {Abstrakt}       {}
-\.mtdef {thanks}       {Acknowledgement}   {Poděkování}     {Poďakovanie} 
-\.mtdef {declaration}  {Declaration}       {Prohlášení}     {Prehlásenie} 
+\.mtdef {thanks}       {Acknowledgement}   {Poděkování}     {Poďakovanie}
+\.mtdef {declaration}  {Declaration}       {Prohlášení}     {Prehlásenie}
 \.mtdef {keywords}     {Keywords}          {Klíčová slova}  {Kľúčové slová}
 \.mtdef {trans}        {Title translation} {Překlad titulu} {Preklad titulu}
 \.mtdef {title}        {TITLE}             {TITUL}          {}
@@ -116,7 +116,7 @@
 \.mtdef {supervisor}   {Supervisor}        {Vedoucí práce}  {Vedúci práce}
 \.mtdef {supervisorD}  {Supervisor}        {Školitel}       {Školiteľ}
 \.mtdef {bibliography} {References}        {Literatura}     {Literatúra}
-\.mtdef {appendix}     {Appendix}          {Příloha}        {Príloha}     
+\.mtdef {appendix}     {Appendix}          {Příloha}        {Príloha}
 \.mtdef {specifi}      {Specification}     {Zadání}         {Zadanie}
 
 \.mtdef {B} {Bachelor's Thesis} {Bakalářská práce}  {Bakalárska práca}
@@ -162,8 +162,9 @@
 \_let\bf=\_undefined \_let\bi=\_undefined % newly defined variant selectors
 \_famvardef \bf {\.Technikascaled\_bf}
                 \_addto\bf {\_inmath{\_bsansvariables \_bsansgreek \_bsansdigits}}
-\_famvardef \bi {\.Technikascaled\_bi} 
+\_famvardef \bi {\.Technikascaled\_bi}
                 \_addto\bi {\_inmath{\_bisansvariables \_bisansgreek \_bsansdigits}}
+\_famvardef \ssb {\.Technikascaled}
 \_famvardef \ssr {\.Technikascaled\.book\_rm}
 \_famvardef \ssi {\.Technikascaled\.book\_it}
 \_famvardef \sc  {\.caps\_rm}
@@ -184,7 +185,7 @@
 \_protected\_def \.boldify {%
    \_let\it =\.bi \_let\rm =\.bf \_let\_rm=\_bf \_let\_it=\_bi
    \_let\_normalmath=\_boldmath
-   \.bf 
+   \.bf
    \_let \.Technikascaled =\.Technika
    \_let\LaTeX = \.bLaTeX
 }
@@ -203,7 +204,7 @@
 \_def\Blue{\_setcmykcolor{1 .43 0 0}}
 \_def\liBlue{\_setcmykcolor{.2 .08 0 0}}
 \_def\liGrey{\_setcmykcolor{0 0 0 0.13}}
-\_let\.nBlue=\Blue 
+\_let\.nBlue=\Blue
 \_let\locc=\relax
 
 \_def\blackwhite{\_let\Blue=\Grey \_let\.nBlue=\Black \_let\Red=\Grey \_let\liBlue=\liGrey}
@@ -215,11 +216,11 @@
               \_noexpand\savetoner ignored}
   \_else
      \_let\liBlue=\White
-  \_fi 
+  \_fi
 }}
 
 \_hyperlinks{\Black}{\Black}
-\_def\_tocborder{1 .8 0} 
+\_def\_tocborder{1 .8 0}
 \_let\_pgborder\_tocborder
 \_let\_citeborder\_tocborder
 \_let\_refborder\_tocborder
@@ -231,22 +232,22 @@
 %%% Draft
 
 \_def\.drafttext{}
-\_def\draft{\_showlabels 
-     \_def\.drafttext{\_vbox to0pt{\_vss \_llap{   
+\_def\draft{\_showlabels
+     \_def\.drafttext{\_vbox to0pt{\_vss \_llap{
      \Grey \.bf\_thefontsize[11] Draft: \_the\_day. \_the\_month.
      \_the\_year\Black}}}}
 
-\_def\linespacing=#1#2 {\_def\.thelinespacing{#1#2}}  
+\_def\linespacing=#1#2 {\_def\.thelinespacing{#1#2}}
 \linespacing=1
 
 \_def\.setlinespacing{%
    \_ifdim\.thelinespacing pt=1pt \_else
-      \_ifx\.drafttext\_empty 
-            \_message{WARNING: final (not \_string\draft) version, 
+      \_ifx\.drafttext\_empty
+            \_message{WARNING: final (not \_string\draft) version,
                      \_noexpand\linespacing ignored}
          \_else
             \_baselineskip=\.thelinespacing\_baselineskip
-      \_fi 
+      \_fi
    \_fi
 }
 
@@ -271,12 +272,12 @@
 
 \_def\.titlepage{
    \_insertoutline{\_mtext{title}}
-   \_line{\Blue \_vrule height 230mm width 4mm \Black \_hss 
+   \_line{\Blue \_vrule height 230mm width 4mm \Black \_hss
       \_vbox to230mm{\_advance\_hsize by-8mm \_parindent=0pt
          \_picwidth=3cm \_picdir={}\.bf
          \_line{\_inspic{ctulogo-\_ifx\Blue\Grey bw-\_fi new.pdf}\_hss
             \_vbox{\_advance\_hsize by-34mm
-               \_baselineskip=17pt\.bf\_thefontsize[15] 
+               \_baselineskip=17pt\.bf\_thefontsize[15]
                \Blue \_mtext{ctu}\_par
             \_kern.5pt}}
          \_vskip8mm
@@ -285,8 +286,8 @@
                 \Black \_mtext{\_the\faculty}\_par
                 \_the\department}}
          \_vskip5mm
-         \_ifcase\.worktypenum  
-                \_the\workname \_or \_mtext{B}\_or \_mtext{M}\_or \_mtext{D}\_fi 
+         \_ifcase\.worktypenum
+                \_the\workname \_or \_mtext{B}\_or \_mtext{M}\_or \_mtext{D}\_fi
          \_vskip35mm
          \_rightskip=0pt plus1fil
          {\_typosize[25/30]\.boldify\.nBlue \_the\title \_par}
@@ -299,13 +300,13 @@
          \_vss
          \_the\date\_par
          \_the\workinfo\_par
-         \_if&\_the\supervisor&\_else 
+         \_if&\_the\supervisor&\_else
              \_ifnum\.worktypenum=3 \_mtext{supervisorD}%
              \_else \_mtext{supervisor}\_fi: \_the\supervisor\_par\_fi
          \_kern-\_prevdepth \_kern1pt
 }}}
 \_addto\makefront{%
-   \_bgroup \_hbadness=4000 
+   \_bgroup \_hbadness=4000
    \_pageno=-1
    \_footline={\_hss\.drafttext} \.titlepage \_vfil\_break
 }
@@ -317,7 +318,7 @@
 \_def\.twosidepagetwo{\_null\_vskip0pt plus1fil {\_parindent=0pt \_the\pagetwo\_endgraf}}
 \_def\.onesidepagetwo{\_if&\_the\pagetwo&\_else\.twosidepagetwo\_fi}
 \_let\.printpagetwo=\.twosidepagetwo
-\_addto\makefront{\.printpagetwo \_endgraf\_break} 
+\_addto\makefront{\.printpagetwo \_endgraf\_break}
 
 %%% Specification page
 
@@ -331,7 +332,7 @@
 \_newbox\.leftbox  \_newbox\.rightbox
 \_newdimen\.frontht  \.frontht=220mm
 
-\_def\.sethsizefront{\_advance\_hsize by-12mm \_divide\_hsize by2 
+\_def\.sethsizefront{\_advance\_hsize by-12mm \_divide\_hsize by2
    \_emergencystretch=2em \_righthyphenmin=2 \_hbadness=5000 \_penalty0 }
 
 \_def\.frontpage [#1/#2]{
@@ -369,7 +370,7 @@
    \.declpage \_vfil\_break
 }
 \_def\signature {\_vskip2cm \_indent\.tocdotfill\_null}
-\_def\.tocdotfill{\_leaders\_hbox to.4em{\_hss.\_hss}\_hskip 1em plus1fill\_relax} 
+\_def\.tocdotfill{\_leaders\_hbox to.4em{\_hss.\_hss}\_hskip 1em plus1fill\_relax}
 
 
 %%% Abstract page
@@ -378,9 +379,9 @@
    \_chardef\.orilang=\_language
    \_setbox\.leftbox=\_vbox{\.sethsizefront
          \_enlang \_the\abstractEN \_par
-         \_if&\_the\keywordsEN&\_else{\.bf\_mtext{keywords}:} \_the\keywordsEN\_par\_fi
+         \_if&\_the\keywordsEN&\_else\_vskip3mm{\.bf\_mtext{keywords}:} \_the\keywordsEN\_par\_fi
          \_ifnum\.orilang=\_language \_else
-            \_if&\_the\titleEN&\_else{\.bf\_mtext{trans}:} \_the\titleEN
+            \_if&\_the\titleEN&\_else\_vskip3mm{\.bf\_mtext{trans}:} \_the\titleEN
                \_if&\_the\subtitleEN&\_else \_space(\_the\subtitleEN)\_fi\_fi\_fi
          \_vfil}
    \_setbox\.rightbox=\_vbox{\.sethsizefront
@@ -393,9 +394,9 @@
             \_let\.titleL=\titleCZ
             \_let\.subtitleL=\subtitleCZ
          \_fi
-         \_if&\_the\.keywords&\_else{\.bf\_mtext{keywords}:} \_the\.keywords\_par\_fi
+         \_if&\_the\.keywords&\_else\_vskip3mm{\.bf\_mtext{keywords}:} \_the\.keywords\_par\_fi
          \_ifnum\.orilang=\_language \_else
-            \_if&\_the\.titleL&\_else{\.bf\_mtext{trans}:} \_the\.titleL
+            \_if&\_the\.titleL&\_else\_vskip3mm{\.bf\_mtext{trans}:} \_the\.titleL
                \_if&\_the\.subtitleL&\_else \_space(\_the\.subtitleL)\_fi\_fi\_fi
          \_vfil}
    \.prepbox\.leftbox \.prepbox\.rightbox
@@ -431,10 +432,10 @@
 \_sdef{_tocl:1}#1#2#3{\_nofirst\_smallskip
    \.bf\_llaptoclink{#1}{#2}\_nobreak\_hfill\_pgn{#3}\_tocpar}
 
-\_def\.tocpages{   
+\_def\.tocpages{
    \_setbox\.tocbox=\_vbox{\.sethsizefront \_parskip=0pt \_iindent=7mm \_maketoc\_vfil}
    \.prepbox\.tocbox
-   \_setbox\.rightbox=\_vsplit\.tocbox to\.frontht 
+   \_setbox\.rightbox=\_vsplit\.tocbox to\.frontht
    \_ifvoid\.tocbox
       \_insertoutline{\_mtext{contents}}
       \_ifodd\_pageno
@@ -450,10 +451,10 @@
       \.frontpage[\_mtext{contents}/]
    \_fi
    \_loop \_ifvoid\.tocbox \_let\.tmp=\_relax
-         \_else \_vfil\_break 
+         \_else \_vfil\_break
                 \_setbox\.leftbox=\_vsplit\.tocbox to\.frontht
                 \_setbox\.rightbox=\_vsplit\.tocbox to\.frontht
-                \.frontpage[/]\_let\.tmp=\_span 
+                \.frontpage[/]\_let\.tmp=\_span
          \_fi
          \_ifx\.tmp\_span \_repeat
 }
@@ -489,7 +490,7 @@
       \_loop \_let\.tmp=\_relax
             \_ifvoid\.totbox \_else \_setbox\.leftbox=\_vsplit\.totbox to\.frontht
                                  \_let\.tmp=\_do \_fi
-            \_ifvoid\.tofbox \_else \_setbox\.rightbox=\_vsplit\.tofbox to\.frontht 
+            \_ifvoid\.tofbox \_else \_setbox\.rightbox=\_vsplit\.tofbox to\.frontht
                                  \_let\.tmp=\_do \_fi
             \_ifx\.tmp\_do \_vfil\_break \.frontpage[/] \_repeat
    \_fi
@@ -526,12 +527,12 @@
      \Black \_ifnonum\_else\_mtext{chap} \_fi
      {\.bf\_thefontsize[30]\_printrefnum[@]}\_par\_nobreak
   \_noindent\.nBlue #1\_rightskip=0pt plus1fil \_strut\_nbpar}}%
-  \_nobreak\_vskip-.5\_parskip 
+  \_nobreak\_vskip-.5\_parskip
   \_belowtitle{\_bigskip}
   \_firstnoindent
 }
 
-\_def\_printsec#1{\_par \_abovetitle{\_goodbreak} 
+\_def\_printsec#1{\_par \_abovetitle{\_goodbreak}
   \_bigskip\_medskip\_vskip.5\_parskip
   \.begitemstest\sec
   \_line{\Blue\_vrule height 6mm width4mm depth1mm
@@ -539,16 +540,16 @@
      \.secfont \_noindent \Black\_printrefnum[@\_quad]%
      \.nBlue#1\_rightskip=0pt plus1fil \_strut\_nbpar}}%
   \_insertmark{#1}%
-  \_nobreak\_vskip-.5\_parskip 
+  \_nobreak\_vskip-.5\_parskip
   \_belowtitle{\_medskip}
   \_firstnoindent
 }
 
 \_let\.printsecc=\_printsecc
-\_def\_printsecc#1{\_par \_abovetitle{\_goodbreak} 
+\_def\_printsecc#1{\_par \_abovetitle{\_goodbreak}
   \_smallskip\_medskip\_vskip.5\_parskip
   \.begitemstest\secc
-  \_line{\Blue\_vrule height 3.5mm width4mm depth.3mm\Black 
+  \_line{\Blue\_vrule height 3.5mm width4mm depth.3mm\Black
   \_hss\_vtop{\_advance\_hsize by-8mm
    \.seccfont \_noindent \_printrefnum[@\_quad]%
    \.nBlue#1\_rightskip=0pt plus1fil \_strut\_nbpar\_kern-4.5pt}}%
@@ -572,8 +573,8 @@
 {\.bf\_thefontsize[25] \_global\_ea\_let\_ea\.bigdotfont\_the\_font}
 \_def\.tecky{\liBlue\_xleaders\_hbox to10.5pt{\.bigdotfont\_hss.\_hss}\_hfil\Black}
 
-\_def\.begitemstest#1{\_ifnum\_catcode`\*=13 
-   \_message{WARNING: \_string#1 used in \_string\begitems...\_noexpand\enditems 
+\_def\.begitemstest#1{\_ifnum\_catcode`\*=13
+   \_message{WARNING: \_string#1 used in \_string\begitems...\_noexpand\enditems
             environment (line: \_the\_inputlineno)}\_fi}
 
 %%% Appendicies
@@ -587,7 +588,7 @@
 
 \_eoldef\.inapp#1{\_sectionlevel=1
   \_global\_advance\.appnum by1
-  \_def \_savedtitle {#1}% saved to .ref file 
+  \_def \_savedtitle {#1}% saved to .ref file
   \_ifx\chap\.nochap \_else \nextoddpage \_global\_let\chap=\.nochap \_fi
   \_secnum=0 \_seccnum=0 \_relax
   \_xdef\_therefnum{\.appletter}\_global\_let\_thechapnum=\_therefnum
@@ -667,8 +668,8 @@
 
 \everytt={\typosize[10.5/13.6]}
 \_let\.printverblineori=\_printverbline
-\_def\_printverbline#1{\penalty \_ttpenalty \noindent 
-   \rlap{\vbox to0pt{\vss\liBlue 
+\_def\_printverbline#1{\penalty \_ttpenalty \noindent
+   \rlap{\vbox to0pt{\vss\liBlue
          \hrule width\hsize height10pt depth4pt \kern-4pt}}%
    \_printverblinenum \hskip 1em #1 \par
 }
@@ -707,7 +708,7 @@
    \_else
       \_bgroup
         \_ifx \dosorting\_relax \_else \_dosorting \.gloslist \_fi
-        \_ifdim\.maxglosindent=0pt 
+        \_ifdim\.maxglosindent=0pt
            \_ifx\.glosindent\_undefined \.maxglosindent=2\_parindent
               \_edef\.glosindent{\_the\.maxglosindent}\_fi
         \_else \_edef\.glosindent{\_the\.maxglosindent}\_fi
@@ -718,7 +719,7 @@
       \_egroup
    \_fi
 }
-\_def\glosref #1#2{\_if^#2^\_else \.glos{#1}{#2}\_fi 
+\_def\glosref #1#2{\_if^#2^\_else \.glos{#1}{#2}\_fi
    \.makegloslink{#1}\_link[glos:\.tmp]{}{#1}}
 \_def\glref #1{\.glosref{#1}{}}
 \_let\_glosborder=\_tocborder
@@ -741,7 +742,7 @@
 
 \_newcount\.rfcnum
 
-\_def\.rfclist{}  
+\_def\.rfclist{}
 \_def\.rfcactive#1{\_global\_advance\.rfcnum by1
    \_dest[rfc:rfc-\_the\.rfcnum]\_global\_addto\.rfclist{\.rfcitem #1}}
 \_def\rfc#1{}

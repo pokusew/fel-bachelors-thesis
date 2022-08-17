@@ -3,6 +3,7 @@
 %    see https://tex.stackexchange.com/questions/109064/is-there-a-difference-between-and-in-bibtex
 % 2. TODO: urldate is not shown References
 %    see https://tex.stackexchange.com/questions/48983/urldate-in-bibtex-gets-ignored
+% 3. TODO: Improve redering of details in general (publish date, access date, booktitle, ...)
 
 % online resources
 
@@ -20,9 +21,9 @@
 	abstract = "How a small band of Silicon Valley engineers started a global robotics revolution",
 	issue_date = {2017-11-07},
 	month = 11,
-	year = 2017,
+	% year = 2017,
 	url = "https://spectrum.ieee.org/wizards-of-ros-willow-garage-and-the-making-of-the-robot-operating-system",
-	howpublished = "\url{https://spectrum.ieee.org/wizards-of-ros-willow-garage-and-the-making-of-the-robot-operating-system}",
+	howpublished = {{IEEE} Spectrum, November 7, 2017},
 	language = "en"
 }
 
@@ -63,37 +64,27 @@
 }
 
 @misc{ros2_docs,
-	title = {ROS 2 Documentation -- ROS 2 Documentation: Rolling documentation},
-	url = {https://docs.ros.org/en/rolling/},
-	urldate = {2021-05-28},
+	title = "{ROS} 2 Documentation -- {ROS} 2 Documentation: Rolling documentation",
+	url = "https://docs.ros.org/en/rolling/",
 }
 
-@misc{ros2_foxy_root,
-	title = {ROS 2 Documentation -- ROS 2 Documentation: Foxy documentation},
-	url = {https://docs.ros.org/en/foxy/index.html},
-	urldate = {2021-05-28},
+@MISC{ros2_docs_launch,
+	title = "Launching/monitoring multiple nodes with Launch -- {ROS} 2 Documentation: Rolling documentation",
+	url = "https://docs.ros.org/en/rolling/Tutorials/Intermediate/Launch/Launch-system.html",
 }
 
-@misc{ros2_foxy_launch,
-	title = {Launching/monitoring multiple nodes with Launch -- ROS 2 Documentation: Foxy documentation},
-	url = {https://docs.ros.org/en/foxy/Tutorials/Launch-system.html},
-	urldate = {2021-05-28},
+@misc{ros2_docs_dds_vendors,
+	title = "About different {ROS} 2 {DDS/RTPS} vendors -- {ROS} 2 Documentation: Rolling documentation",
+	url = "https://docs.ros.org/en/rolling/Concepts/About-Different-Middleware-Vendors.html",
 }
 
-@misc{ros2_foxy_dds,
-	title = {About different ROS 2 DDS/RTPS vendors -- ROS 2 Documentation: Foxy documentation},
-	url = {https://docs.ros.org/en/foxy/Concepts/About-Different-Middleware-Vendors.html},
-	urldate = {2021-05-28},
-}
-
-@misc{ros2_foxy_internal,
-	title = {About internal ROS 2 interfaces -- ROS 2 Documentation: Foxy documentation},
-	url = {https://docs.ros.org/en/foxy/Concepts/About-Internal-Interfaces.html},
-	urldate = {2021-05-28},
+@misc{ros2_docs_internal_interfaces,
+	title = "About internal {ROS} 2 interfaces -- {ROS} 2 Documentation: Rolling documentation",
+	url = "https://docs.ros.org/en/rolling/Concepts/About-Internal-Interfaces.html",
 }
 
 @misc{ros2_design_why,
-	title = {Why ROS 2?},
+	title = {Why ROS 2? -- ROS 2 Design},
 	url = {https://design.ros2.org/articles/why_ros2.html},
 	abstract = {Distilled design documents related to the ROS 2 effort},
 	urldate = {2021-05-28},
@@ -126,7 +117,7 @@
 }
 
 @misc{ros_metrics,
-	title = {Users -- ROS Metrics},
+	title = {ROS Metrics},
 	url = {https://metrics.ros.org/},
 	urldate = {2021-05-28},
 }
@@ -194,7 +185,7 @@
 }
 
 @thesis{dusil_detection_2019,
-	author = {Jan Dusis},
+	author = {Jan Dusil},
 	title = {Slip detection for F1/10 model car},
 	year = {2019},
 	type = {Bachelor's Thesis},

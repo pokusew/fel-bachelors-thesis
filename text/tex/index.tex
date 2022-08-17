@@ -15,7 +15,6 @@
 \studyinfo  {Open Informatics – Artificial Intelligence and Computer Science}
 \workinfo   {\url{https://github.com/pokusew/fel-bachelors-thesis}}
 
-% TODO: re-enable the assigment PDF for the final versions
 % The two PDF Assigment pages after the Title Page
 \specification {
 	\vbox to0pt{\vskip-32mm\centerline{\inspic ../../formalities/fel-bachelors-thesis-official-assignment-p1.pdf }\vss}
@@ -40,15 +39,13 @@
 
 \abstractCZ {
 
-	Provádění vysokorychlostních manévrů při autonomním řízení je problematické bez řádné podpory real-time. Na ČVUT je tým, který se účastní soutěže F1/10 Autonomous Driving Competition s autonomními modely aut. Jejich software pro autonomního řízení je založen na ROS 1, který není vhodný pro real-time aplikace.
+	Manévrování ve vysoké rychlosti při autonomním řízení je problematické bez řádné podpory real-time na straně softwaru. Na ČVUT je tým, který se účastní soutěže F1/10 Autonomous Driving Competition s autonomními modely aut. Jejich software pro autonomního řízení je založen na ROS~1, který není vhodný pro real-time aplikace.
 
-	Cílem této práce je migrovat tento software na ROS 2, který byl od základu navržen tak, aby řešil mnoho problémů v této oblasti.
+	Cílem této práce je migrovat tento software na ROS~2, který byl od základu navržen s ohledem na real-time aplikace. Dále v práci navrhujeme tracing jako efektivní způsob analýzy běžícího systému na ROS~2 a měření důležitých parametrů.
 
-	Dále v práci navrhujeme tracing jako efektivní způsob analýzy běžícího systému na ROS 2 a měření jeho důležitých vlastností.
+	Výsledky naší práci zahrnují software migrovaný do ROS~2, jehož funkčnost demonstrujeme na skutečném modelu F1/10 a v simulátoru Stage. Dále analyzujeme komunikační latence v~migrovaném softwaru pomocí námi rozšířené verze tracing nástrojů pro ROS~2. Dalším výsledkem naší práce je veřejně dostupná sbírka návodů, skriptů a dokumentace, která pokrývá různé aspekty práce s ROS. Tyto návody již pomohly několika lidem.
 
-	Fungování migrovaného softwaru demonstrujeme na modelu vozu F1/10 a v simulátoru Stage. Vyhodnocujeme komunikační latence pomocí rozšířené verze tracing nástrojů pro ROS 2. Dalším výsledkem naší práce je veřejně dostupná sbírka návodů, skriptů a dokumentace, která pokrývá různé aspekty práce s ROS. Tyto návody již pomohly několika lidem.
-
-	Doufáme, že výsledky této práce vytvoří základ, který otevře cestu pro adopci ROS 2 v projektu F1/10 na ČVUT a zároveň jej zpřístupní novým studentům.
+	Doufáme, že výsledky této práce vytvoří základ, který otevře cestu pro adopci ROS~2 v projektu F1/10 na ČVUT a zároveň jej zpřístupní novým studentům.
 
 }
 \keywordsCZ {
@@ -59,7 +56,7 @@
 	First of all, I would like to thank my~supervisor Ing.~Michal~Sojka,~Ph.D.
 	\nl for his guidance, support, and immense patience.
 
-	Second, I would like to thank Ing.~Jaroslav Klapálek for providing valuable
+	Second, my thanks go to Ing.~Jaroslav Klapálek for providing valuable
 	information and advice regarding the F1/10 project.
 
 	Next, I would like to thank Bc.~Tomáš Nagy for his help with all sorts of mechanical stuff,
