@@ -1,34 +1,172 @@
 \chap[f1tenth] CTU's F1/10 Platform
 
-The F1/10 platform is a scaled-down (1:10) model of an autonomous car that originates from F1/10 Autonomous Racing Competition (TODO: add ref or footnote). Thanks to its affordability and similarity to a real car, the platform can be easily used for the development, testing, and verification of autonomous driving systems and related algorithms.
+The F1/10 platform is a~scaled-down (1:10) model of an autonomous car that originates from the F1/10 Autonomous Racing Competition\urlnote{https://f1tenth.org/}. Thanks to its affordability and similarity to a~real car, the platform can be easily used for developing, testing, and verifying autonomous driving systems and related algorithms.
 
-At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-3"~\ref[img_tx2_auto_3] and "tx2-auto-usa"\footnote{This was designed by a fellow student, Tomáš Nagy. The main difference compared to the tx2-auto-3 is its chassis design (components' placement and mounting). The usa suffix in the model name refers to the fact that this model was assembled in the USA during our (my and Tomas Nagy's) internship at the University of Pennsylvania.}. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a description is a prerequisite for a successful migration to ROS 2 ~\ref[migration].
+At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-3" (depicted in Figure~\ref[img_tx2_auto_3]) and "tx2-auto-usa"\fnote{This new model was designed by a~fellow student, Tomáš Nagy. The main difference compared to the {\tt tx2-auto-3} is its chassis design (components' placement and mounting). The {\tt usa} suffix in the model name refers to the fact that this model was assembled in the USA during our (my and Tomáš's) internship at the University of Pennsylvania.}. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a~description is a~prerequisite for a~successful \ilink[ref:migration]{migration} to ROS~2.
 
 \midinsert
 \clabel[img_tx2_auto_3]{The CTU's Third F1/10 Model Car}
-\picw=8cm \cinspic ../images/tx2-auto-3.png
+\picw=12cm \cinspic ../images/tx2-auto-3.png
 \caption/f The CTU's Third F1/10 Model Car based on NVIDIA Jetson TX2.
 \endinsert
+
+% TODO: tx2-auto-usa photo
 
 
 \sec Hardware Stack
 
-The platform is based on an off-the-shelf RC car model from Traxxas (i.e., Traxxas Slash, but different ones can be used as well) with added components that enable autonomous operation (sensors, computers). The following table/list provides a quick overview of those components, which are then described in detail in the next sections. The diagram (ref diagram) shows the functional relationships among them.
+The platform is based on an off-the-shelf RC car model from Traxxas (i.e., Traxxas Slash, but different ones can be used as well) with added components that enable autonomous operation (sensors, computers). The list below provides a~quick overview of those components, which are then described in detail in the following subsections. The Figure~\ref[diagram_ctu_f1tenth_hw] shows the functional relationships among them.
 
 \begitems
-* NVIDIA Jetson TX2  – The main computing unit that runs the autonomous driving stack.
-* VESC (Enertion FOCBOX VESC-X)– Electric Speed Controller (ESC) that controls the BLDC motor.
-* Teensy 3.2 – A microcontroller (MCU) for controlling the steering and handling the communication with an RC Transmitter (Manual Control). It also implements an independent emergency stop (eStop).
-* Hokuyo UST-10LX – LiDAR
-* SparkFun 9DoF Razor IMU M0 – IMU
+* {\sbf NVIDIA Jetson TX2}  – The main computing unit that runs the autonomous driving stack.
+* {\sbf VESC (Enertion FOCBOX VESC-X)}– Electric Speed Controller (ESC) that controls the BLDC motor.
+* {\sbf Teensy 3.2} – a~microcontroller (MCU) for controlling the steering and handling the communication with an RC Transmitter (Manual Control). It also implements an independent emergency stop (eStop).
+* {\sbf Hokuyo UST-10LX} – LiDAR
+* {\sbf SparkFun 9DoF Razor IMU M0} – IMU
 \enditems
 
 \midinsert
-\clabel[ctu_f1tenth_hw_diagram]{Functional Diagram}
-\picw=8cm \cinspic ../images/ctu-f1tenth-v5-e.pdf
+\clabel[diagram_ctu_f1tenth_hw]{Functional Diagram of the CTU's F1/10 Platform}
+\picw=14cm \cinspic ../images/ctu-f1tenth-hw-diagram.pdf
 \caption/f Overview of main components with depicted methods of communication. The yellow blocks are part of the low-level system, which always works independently of the main high-level system (NVIDIA Jetson TX2).
 \endinsert
 
 
+\secc Chassis and Powerboard
+
+While the main chassis, BLDC drive motor, steering servo, and RC receiver from the Traxxas model are preserved, the ESC is replaced by a~VESC.
+
+Further, a~structure for mounting the sensors and the main computing unit is added. While "tx2-auto-3" uses a~two-layer design – one laser-cut plate which is mounted on the original chassis using standoffs; "tx2-auto-usa" features a~much more sophisticated and streamlined design consisting of multiple 3D-printed parts. The "tx2-auto-usa"'s design allows much easier battery replacement.
+
+Finally, a~powerboard is needed to power the AV components. For that purpose, a~custom powerboard has been designed. One of the latest iterations was created as a~part of~\cite[dusil_detection_2019].
+
+
+\secc NVIDIA Jetson TX2
+
+The NVIDIA Jetson TX2 forms the "brain" of the car. It processes data from all sensors and decides what to do. In other words, it runs the autonomous driving pipeline, which usually includes perception, localization (state estimation), planning, and control. Such a~task requires a~powerful device. Additional requirements include power-efficient operation (because of the limited capacity of batteries) and small form factor (because of limited space in the chassis). Fortunately, NVIDIA Jetson TX2 fulfills all of these requirements.
+
+NVIDIA Jetson TX2 is a~very powerful but power-efficient embedded system (SoC) designed for autonomous machines. It is distributed as a~very compact module with a~standardized board-to-board connector. This way, it can be used in applications that might require different physical IO interfaces. On our car, we use the Orbitty Carrier board from Connect Tech, which provides a~suitable form factor for our use case. The Table~\ref[table_jetson_tx2_specs] lists some of Jetson TX2's key specs.
+
+\midinsert
+
+\clabel[table_jetson_tx2_specs]{NVIDIA Jetson TX2's Key Specs}
+
+\ctable{lp{80mm\fL}}{
+	{\sbf GPU} & 256-core NVIDIA Pascal™ GPU architecture with 256 NVIDIA CUDA cores \crl
+	{\sbf CPU} & Dual-Core NVIDIA Denver 2 64-Bit CPU \nl Quad-Core ARM® Cortex®-A57 MPCore \crl
+	{\sbf Memory} & 8 GB 128-bit LPDDR4 Memory \nl 1866 MHz - 59.7 GB/s \crl
+	{\sbf Storage} & 32 GB eMMC 5.1 \crl
+	{\sbf Power} & 7.5 W / 15 W \cr
+}
+
+\caption/t NVIDIA Jetson TX2's Key Specs~\cite[nvidia_jetson_tx2]
+
+\endinsert
+
+Jetson modules run Linux as an OS. NVIDIA provides JetPack SDK, which is a~collection of software for Jetson modules. The main part is L4T (Linux For Tegra) which consists of flashing utilities, bootloader, Linux Kernel, NVIDIA drivers, and a~sample filesystem based on Ubuntu.
+
+
+\secc Teensy 3.2
+
+Teensy 3.2\urlnote{https://www.pjrc.com/store/teensy32.html} is a~development board with a~single-core NXP Kinetis K20 MCU (MK20DX256VLH7), which is based on ARM Cortex-M4. It comes with a~software library called Tennsyduino, which is an Arduino-compatible library. The following list summarizes some of the MCU's key parameters:
+
+\begitems
+* ARM Cortex-M4 at 72 MHz
+* 256K Flash, 64K RAM, 2K EEPROM
+* USB device 12 Mbit/sec
+* 34 digital input/output pins, 12 PWM output pins
+* 21 analog input pins, 1 analog output pin, 12 capacitive sense pins
+* 3 serial, 1 SPI, 2 I2C ports
+* 1 I2S/TDM digital audio port
+* 1 CAN bus
+* 16 general purpose DMA channels
+\enditems
+
+\midinsert
+\clabel[img_teensy_32]{Teensy 3.2 Development Board}
+\picw=7cm \cinspic ../images/teensy32.jpg
+\caption/f Teensy 3.2 Development Board~\cite[img_src_teensy_32]
+\endinsert
+
+
+\secc VESC
+
+VESC\urlnote{https://vesc-project.com/} is an open-source (both hardware and software) ESC created by Benjamin Vedder. It is based on a~single-core ARM Cortex-M4 MCU which runs the open-source bldc firmware. There is also a~sophisticated GUI tool called VESC Tool (formerly BLDC Tool) that allows configuration, firmware upgrades, and tuning of connected VESCs.
+
+Throughout time, there have been many iterations of VESC's design, and different manufacturers have produced and sold VESC hardware. The VESC that is currently used on the CTU's F1/10 cars is Enertion FOCBOX VESC-X (with bldc firmware v2.18) which is very old and no longer manufactured as the company Enertion went of business. However, it still works. Compared to the latest VESC 6 MK5, it has fewer IO interfaces and fewer features in general.
+
+
+\secc LiDAR
+
+\midinsert
+\clabel[img_hokuyo]{Hokuyo UST-10LX LiDAR}
+\picw=3cm \cinspic ../images/hokuyo.png
+\caption/f Hokuyo UST-10LX LiDAR
+\endinsert
+
+\medskip
+\medskip
+\medskip
+\medskip
+
+\secc IMU
+
+% \midinsert
+\clabel[img_imu]{SparkFun 9DoF Razor IMU M0}
+\picw=5cm \cinspic ../images/14001-SparkFun_9DoF_Razor_IMU_M0-01.jpg
+\caption/f SparkFun 9DoF Razor IMU M0
+% \endinsert
+
+
+\secc Additional Components
+
+The design requires a~few additional components that were not mentioned in the previous sections. Most notably:
+
+\begitems
+* a~USB hub – Because NVIDIA Jetson TX2 features only one USB 3.0 port.
+* An Ethernet USB adapter – In case we connect the LiDAR to the only Ethernet port on the Jetson, and we still want to use a~wired network connection (might be useful during development).
+\enditems
+
+
 \sec Software Stack
 
+The CTU F1/10 autonomous driving stack is based on ROS~1 Kinetic Kame. It consists of multiple components that can be used in various combinations to support different applications. a~detailed overview of the CTU F1/10 platform architecture can be found in Section 4.3.2 of~\cite[klapalek_avoidance_2019]. a~high-level overview of a~typical data flow is depicted in Figure~\ref[diagram_ctu_f1tenth_sw].
+
+\midinsert
+\clabel[diagram_ctu_f1tenth_sw]{CTU's F1/10 Platform SW Architecture}
+\picw=14cm \cinspic ../images/ctu-f1tenth-software-ros1.pdf
+\caption/f a~high-level overview of a~typical data flow is depicted in the the CTU F1/10 platform.
+\endinsert
+
+In the next subsections, we briefly describe some of the components that will be relevant for the \ilink[ref:migration]{migration}.
+
+
+\secc Drive-API
+
+Drive-API is a~ROS node that provides a~hardware-independent way of controlling the car. In fact, it provides several different methods for controlling the car (using different units). It loads the car-specific parameters from the ROS Parameter Server. Then it uses them to convert the car-agnostic control commands to car-specific Teensy and VESC control commands.
+
+
+\secc Simulation
+
+In ~\cite[klapalek_avoidance_2019], the Stage simulator is introduced as an efficient and simple way to simulate F1/10 cars. ROS package "stage_ros"\urlnote{https://wiki.ros.org/stage_ros} provides the necessary bindings between Stage and ROS.
+
+
+\secc Teensy
+
+In the CTU's F1/10 platform, the Teensy board has several responsibilities.
+
+It decodes throttle and steering PWM signals from the RC receiver. It continuously sends the decoded duty cycles over USB to the Jetson so that it can be used by any high-level algorithms.
+
+At the same time, it receives control commands (throttle and steering duty cycle) from the Jetson. Depending on the state of {\em emergency stop (eStop)}, it generates and outputs new PWM signals to control the servo and the VESC.
+
+When eStop is active (manual override, signalized by a~blinking orange LED), any control commands from the Jetson are ignored, and the data from the RC receiver are used instead.
+
+When eStop is not active, then commands from the Jetson are used to control the servo and the VESC. Optionally the VESC can be controlled directly from Jetson using USB, which has the advantage of using eRPMs instead of just duty cycle. But when eStop is active, the VESC cannot be controlled using USB as the PWM throttle signal will simply overwrite the USB control commands.
+
+Finally, using two manual switches, it is possible to bypass the Teensy board and use the RC receiver's PWM signals to control the servo and the VESC directly.
+
+The communication between the Teensy and the ROS system running in the Jetson is implemented using "rosserial"\urlnote{https://wiki.ros.org/rosserial}. This allows the firmware running in the Teensy to subscribe and publish to ROS topics as long as there is a~special node ("rosserial" agent) running in the Jetson that handles the necessary translation between the ROS network and the USB.
+
+\secc NVIDIA Jetson TX2
+
+ROS~1 Kinetic Kame targets Ubuntu 16. For that reason, the Jetson is flashed with NVIDIA JetPack 3.x, which is based on Ubuntu 16.
