@@ -12,11 +12,13 @@ The TeX sources of the Thesis consists of the following files:
 │   ├── index.tex - the Thesis Root
 │   ├── 1-introduction.tex
 │   ├── 2-ros.tex
-│   ├── 3-f1tenth.tex
-│   ├── 4-follow-the-gap.tex
-│   ├── 5-jetson.tex
-│   ├── 6-conclusion.tex
+│   ├── 3-tracing.tex
+│   ├── 4-f1tenth.tex
+│   ├── 5-migration.tex
+│   ├── 6-evaluation.tex
+│   ├── 7-conclusion.tex
 │   ├── appendices.tex
+│   ├── glossary.tex
 │   └── ... CTUstyle3 template files
 └── images - images and diagrams
     └── ...
@@ -51,7 +53,7 @@ make open
 
 To copy the resulting output to a final place:
 ```bash
-cp index.pdf ../Endler-Martin-ROS-2-Bachelors-Thesis-Latest.pdf
+cp index.pdf ../Using_ROS_2_for_High-Speed_Maneuvering_in_Autonomous_Driving.pdf
 ```
 Or you can the following shortcut:
 ```bash

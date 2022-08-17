@@ -146,12 +146,12 @@ In the next subsections, we briefly describe some of the components that will be
 Drive-API is a~ROS node that provides a~hardware-independent way of controlling the car. In fact, it provides several different methods for controlling the car (using different units). It loads the car-specific parameters from the ROS Parameter Server. Then it uses them to convert the car-agnostic control commands to car-specific Teensy and VESC control commands.
 
 
-\secc Simulation
+\secc[f1tenth_sw_sim] Simulation
 
 In ~\cite[klapalek_avoidance_2019], the Stage simulator is introduced as an efficient and simple way to simulate F1/10 cars. ROS package "stage_ros"\urlnote{https://wiki.ros.org/stage_ros} provides the necessary bindings between Stage and ROS.
 
 
-\secc Teensy
+\secc[f1tenth_sw_teensy] Teensy
 
 In the CTU's F1/10 platform, the Teensy board has several responsibilities.
 

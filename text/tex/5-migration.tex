@@ -8,10 +8,10 @@ Having introduced ROS 1 and 2 and having described the components of the CTU's F
 Throughout the time we worked with the CTU's F1/10 platform, multiple ROS 2 versions were released.
 
 \begitems
-* May 2020: 6th release ROS 2 Foxy Fitzroy (Ubuntu 20) (EOL: May 2023\footnote{Foxy was the first ROS 2 release with 3-year support. That signified the stability of this release. And Humble even came with a 5-year support plan.})
-* May 2021: 7th release ROS 2 Galactic Geochelone (Ubuntu 20) (EOL: November 2022)
-* May 2022: 8th release ROS 2 Humble Hawksbill (Ubuntu 22) (EOL: May 2027)
-* rolling release: ROS 2 Rolling Ridley
+* May 2020: 6th release ROS 2 Foxy (Ubuntu 20) (EOL: May 2023\fnote{Foxy was the first ROS 2 release with 3-year support. That signified the stability of this release. And Humble even came with a 5-year support plan.})
+* May 2021: 7th release ROS 2 Galactic (Ubuntu 20) (EOL: November 2022)
+* May 2022: 8th release ROS 2 Humble (Ubuntu 22) (EOL: May 2027)
+* rolling release: ROS 2 Rolling
 \enditems
 
 First, we targeted just Foxy and Galactic. Then, in order to get access to the latest features and performance improvements, we made the necessary changes to support the latest release, Humble, and the Rolling release as well. In the end, the migrated stack should be runnable in (at least) all these ROS 2 versions.
@@ -21,7 +21,7 @@ First, we targeted just Foxy and Galactic. Then, in order to get access to the l
 
 Currently, the CTU's F1/10 platform is based on ROS 1 Kinetic Kame, which was released in May 2016 and deprecated in May 2021. That, among other things, means it runs on Ubuntu 16 and all ROS Python nodes are written in Python 2. The jump between ROS 1 Kinetic Kame and the current ROS 2 release might be significant. We might face a lot of silly issues with dependencies.
 
-Because migrating all the code of the CTU's F1/10 platform at once would not be wise (footnote: technical debt), we want to start with a self-contained part of it that we will actually try to migrate. Such part should meet at least the following criteria:
+Because migrating all the code of the CTU's F1/10 platform at once would not be wise, we want to start with a self-contained part of it that we will actually try to migrate. Such part should meet at least the following criteria:
 
 \begitems
 * It is possible to easily demonstrate its working in a simulator and on a physical car.
@@ -29,11 +29,11 @@ Because migrating all the code of the CTU's F1/10 platform at once would not be 
 * It represents a typical autonomous driving application. That means reading data from sensor(s) (LiDAR), analyzing the data (perception), planning a trajectory (decision and control), and controlling the vehicle.
 \enditems
 
-All these criteria are met by the Follow the Gap application, which is a part of the CTU F1/10 platform. It implements a reactive algorithm called Follow the Gap that was first introduced in ~\cite[paper_follow_the_gap]. It is a well-known part of the CTU's stack that was responsible for several wins of the CTU team in the F1Tenth Autonomous Competition in the past.
+All these criteria are met by the Follow the Gap application, which is a part of the CTU F1/10 platform. It implements a reactive algorithm called Follow the Gap that was first introduced in~\cite[paper_follow_the_gap]. It is a well-known part of the CTU's stack that was responsible for several wins of the CTU team in the F1Tenth Autonomous Competition in the past.
 
 Additionally, the migrated stack should be as compatible as possible (at least in the beginning) so that we can port more algorithms without rewriting their logic. This concerns especially the Drive-API.
 
-Another thing to keep in mind is that the migration comprises not only porting the actual code to ROS 2, but also setting up the NVIDIA Jetson TX2 so that it can run ROS 2 (which is done in Chapter~\ref[jetson]).
+Another thing to keep in mind is that the migration comprises not only porting the actual code to ROS 2, but also setting up the NVIDIA Jetson TX2 so that it can run ROS 2.
 
 
 \sec Follow the Gap Overview
@@ -61,30 +61,31 @@ In the following subsections, we describe some of the interesting challenges we 
 
 Unlike ROS 1, ROS 2 has no global Parameter Server. Instead, in ROS 2, parameters are managed per node. Each node implements a parameter service that allows getting and setting the parameters during runtime. Initial values of parameters can be supplied at node startup time via command line arguments (parameters file). One of the most useful advantages this design brings is that all parameters can be easily changed during runtime, and nodes can implement custom behavior for handling the changes. In ROS 1, one must use solutions like "dynamic_reconfigure"\urlnote{https://wiki.ros.org/dynamic_reconfigure} to get similar results.
 
-One could argue that in some situations, it might be useful to have a “global parameter storage”. Although that might be true sometimes (footnote: pass one param to all nodes), usually, the relationship between a parameter and a node where it should be defined is quite apparent.
+One could argue that in some situations, it might be useful to have a “global parameter storage”. Although that might be true sometimes\fnote{Fortunately, ROS 2 provides an easy way of setting one or more the same parameters for multiple nodes using the asterisk ("*") syntax in YAML parameter files.}, usually, the relationship between a parameter and a node where it should be defined is quite apparent.
 
 For the CTU's F1/10 codebase, we were able to move all global parameters to logically-related nodes. At the same time, we got the ability to dynamically change the parameters, which proved to be useful, especially for the "follow_the_gap_v0_ride" node.
 
 
 \secc Teensy
 
-As already mentioned in (TODO: ref Teensy), the communication between the Teensy MCU and the Jetson is implemented using rosserial (TODO: https://github.com/ros-drivers/rosserial). There is no direct port of rosserial in ROS 2 \urlnote{https://github.com/ros2/ros2/issues/365} \urlnote{https://newscrewdriver.com/2020/08/05/notes-on-ros2-and-rosserial}. The official replacement in ROS 2 is micro-ROS (\urlnote{https://micro.ros.org/}, \urlnote{https://micro.ros.org/docs/concepts/middleware/rosserial/}) which is built around Micro XRCE-DDS middleware. Given the scope and goal of the project (to bring as much of ROS 2 to MCUs as possible), the overall complexity and hardware requirements are rather high.
+As already mentioned in Section~\ref[f1tenth_sw_teensy], the communication between the Teensy MCU and the Jetson is implemented using "rosserial"\urlnote{https://github.com/ros-drivers/rosserial}. There is no direct port of "rosserial" to ROS 2~\cite[rosserial_ros2_port_issue, rosserial_notes_on_ros2]. The official replacement in ROS 2 is micro-ROS~\cite[micro_ros_docs], which is built around Micro XRCE-DDS middleware~\cite[micro_ros_docs_middleware]. Given the scope and goal of the project (to bring as much of ROS 2 to MCUs as possible), the overall complexity and hardware requirements are rather high.
 
 In order to avoid unnecessary complexity and overhead of micro-ROS, we decided to implement our own simple communication protocol between the Jetson and the Teensy. We implemented a C library (usable also from C++) for serializing and deserializing messages. This library can be used in the Teensy (bare-metal) as well as in the Jetson (Linux).
 
-Next, we had to rewrite the firmware for the Teensy incorporating the new communication protocol. While doing that, we also tried to document some parts of the original code. However, there is still a big room for improvement.
+Next, we had to rewrite the firmware for the Teensy incorporating the new communication protocol. While doing that, we also tried to document some parts of the original code. However, there is still a big room for improvement. The new firmware implementation can be found in "pokusew/teensy-drive"\urlnote{https://github.com/pokusew/teensy-drive} repository.
 
-Finally, we implemented a ROS 2 node called "teensy_drive" that connects to the Teensy via USB (CDC-ACM) and receives and send appropriate messages between Teensy and the ROS 2 network.
+Finally, we implemented a ROS 2 node called "teensy_drive"\urlnote{https://github.com/pokusew/f1tenth-rewrite/tree/main/src/vehicle_platform/teensy_drive} that connects to the Teensy via USB (CDC-ACM) and receives and send appropriate messages between Teensy and the ROS 2 network.
 
 
 \secc Stage simulator
 
-In order to reuse the simulation from ROS 1~\ref[todo], we needed to have working bindings between ROS 2 and the Stage simulator.
+In order to reuse the \ilink[ref:f1tenth_sw_sim]{simulation from ROS 1}, we needed to have working bindings between ROS 2 and the Stage simulator.
 
-We found "stage_ros2"\urlnote{https://github.com/ymd-stella/stage_ros2} package which is doing exactly that. However, it required a few changes in order to be usable in the latest ROS 2. We created a fork "pokusew/stage_ros2"\urlnote{https://github.com/pokusew/stage_ros2} and implemented those changes. The author of the original repository even starred (footnote) our repository. Once there is more time, we will attempt to get our changes merged upstream.
+We found "stage_ros2"\urlnote{https://github.com/ymd-stella/stage_ros2} package which is doing exactly that. However, it required a few changes in order to be usable in the latest ROS 2. We created a fork "pokusew/stage_ros2"\urlnote{https://github.com/pokusew/stage_ros2} and implemented those changes. The author of the original repository even starred\urlnote{https://github.com/pokusew/stage_ros2/stargazers} our repository. Once there is more time, we will attempt to get our changes merged upstream.
 
-Finally, we had to build both the Stage simulator (because there is no package available in recent Ubuntu releases) and our modified stage_ros2 from the source. In the end, we integrated everything to the main workspace (TODO: footnote).
+Finally, we had to build both the Stage simulator (because there is no package available in recent Ubuntu releases) and our modified "stage_ros2" from the source. In the end, we integrated everything to the main workspace\urlnote{https://github.com/pokusew/f1tenth-rewrite}.
 
+\vfill
 
 \secc NVIDIA Jetson TX2 Setup
 
@@ -96,15 +97,15 @@ One of the most significant challenges was running the migrated stack on the Jet
 * Configuring the system (udev rules, Wi-Fi, SSH, etc.) and installing any necessary software.
 \enditems
 
-We collected a lot of documentation, notes, commands, links, and configuration regarding Jetson in our ros-setup repository (footnote: https://github.com/pokusew/ros-setup/tree/main/nvidia-jetson-tx2).
+We collected a lot of documentation, notes, commands, links, and configuration regarding Jetson\urlnote{https://github.com/pokusew/ros-setup/tree/main/nvidia-jetson-tx2} in our "pokusew/ros-setup" repository.
 
 Nevertheless, the main problem was Jetson's outdated software and its specifics. At the time of writing, the latest available NVIDIA JetPack is 4.6.1, which is based on Ubuntu 18. At the same time, the latest available Ubuntu LTS release is Ubuntu 22.
 
 Officially, no ROS 2 version we target supports Ubuntu 18 (TODO: ref ROS 2 versions). However, one can attempt to build ROS 2 from sources even on older Ubuntus, but one must be prepared to face some problems with outdated system dependencies. We tried to do that for Foxy and Galactic and we were (after some struggles) successful.
 
-Running ROS 2 natively on the Jeston is surely nice. Nevertheless, one has to build all application dependencies from their source code, as no prebuilt apt ROS packages are provided by ROS.
+Running ROS 2 natively on the Jetson is surely nice. Nevertheless, one has to build all application dependencies from their source code, as no prebuilt apt ROS packages are provided by ROS.
 
-Another possibility is to use Docker containers. Containers (OCI containers) provide means for isolating applications running in the same OS. They are implemented using native Linux features, most notably namespaces and control groups. Containers are very efficient; they share the Linux kernel, thus having basically zero overhead. One could see containers as properly isolated OS processes.
+Another possibility is to use {\em Docker containers}. Containers (OCI containers) provide means for isolating applications running in the same OS. They are implemented using native Linux features, most notably namespaces and control groups. Containers are very efficient; they share the Linux kernel, thus having basically zero overhead. One could see containers as properly isolated OS processes.
 
 Most importantly for us, we can create containers based on Ubuntu 20 or Ubuntu 22 filesystems and use them to run our ROS 2 stack even on the Jetson with Ubuntu 18. Docker containers can be configured to use the host network adapter, reducing any network overhead and simplifying the ROS 2 setup (it is exactly the same as if the application was running outside the container).
 
@@ -115,8 +116,8 @@ To sum up, we tried both options (build from source and Docker containers). Whil
 
 Once we successfully migrated all the needed parts, we were able to demonstrate the working of the migrated application:
 \begitems
-* on the real car
-* in the Stage simulator on Ubuntu and macOS (footnote: we also made it run on macOS)
+* {\sbf on the real F1/10 car}
+* in the Stage simulator on Ubuntu and macOS\fnote{Although it is possible to run ROS 2 on macOS, it requires a quite a bit of effort (everything must be built from source). We spent a lot of time making it work.}
 \enditems
 
 The code can be found in "f1tenth_rewrite"\urlnote{https://github.com/pokusew/f1tenth-rewrite} repository.
