@@ -77,6 +77,11 @@ Next, we had to rewrite the firmware for the Teensy incorporating the new commun
 Finally, we implemented a ROS 2 node called "teensy_drive"\urlnote{https://github.com/pokusew/f1tenth-rewrite/tree/main/src/vehicle_platform/teensy_drive} that connects to the Teensy via USB (CDC-ACM) and receives and send appropriate messages between Teensy and the ROS 2 network.
 
 
+\secc VESC
+
+The "vesc"\urlnote{https://github.com/f1tenth/vesc/tree/ros2} package provides ROS 2 interface for VESC. However, we encountered a few bugs which motivated us to create a fork\urlnote{https://github.com/pokusew/vesc/tree/ros2-pokusew} fixing these bugs.
+
+
 \secc Stage simulator
 
 In order to reuse the \ilink[ref:f1tenth_sw_sim]{simulation from ROS 1}, we needed to have working bindings between ROS 2 and the Stage simulator.

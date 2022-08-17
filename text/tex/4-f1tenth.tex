@@ -2,15 +2,19 @@
 
 The F1/10 platform is a~scaled-down (1:10) model of an autonomous car that originates from the F1/10 Autonomous Racing Competition\urlnote{https://f1tenth.org/}. Thanks to its affordability and similarity to a~real car, the platform can be easily used for developing, testing, and verifying autonomous driving systems and related algorithms.
 
-At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-3" (depicted in Figure~\ref[img_tx2_auto_3]) and "tx2-auto-usa"\fnote{This new model was designed by a~fellow student, Tomáš Nagy. The main difference compared to the {\tt tx2-auto-3} is its chassis design (components' placement and mounting). The {\tt usa} suffix in the model name refers to the fact that this model was assembled in the USA during our (my and Tomáš's) internship at the University of Pennsylvania.}. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a~description is a~prerequisite for a~successful \ilink[ref:migration]{migration} to ROS~2.
+At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-usa"\fnote{This new model was designed by a~fellow student, Tomáš Nagy. The main difference compared to the {\tt tx2-auto-3} is its chassis design (components' placement and mounting). The {\tt usa} suffix in the model name refers to the fact that this model was assembled in the USA during our (my and Tomáš's) internship at the University of Pennsylvania.} and "tx2-auto-3", which are depicted in Figure~\ref[img_tx2_auto_usa] and Figure~\ref[img_tx2_auto_3], respectively. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a~description is a~prerequisite for a~successful \ilink[ref:migration]{migration} to ROS~2.
 
 \midinsert
-\clabel[img_tx2_auto_3]{The CTU's Third F1/10 Model Car}
-\picw=12cm \cinspic ../images/tx2-auto-3.png
-\caption/f The CTU's Third F1/10 Model Car based on NVIDIA Jetson TX2.
+\clabel[img_tx2_auto_usa]{The CTU's {\tt tx2-auto-usa} F1/10 Model Car}
+\picw=12cm \cinspic ../images/tx2-auto-usa.png
+\caption/f The CTU's {\tt tx2-auto-usa} F1/10 Model Car based on NVIDIA Jetson TX2.
 \endinsert
 
-% TODO: tx2-auto-usa photo
+\midinsert
+\clabel[img_tx2_auto_3]{The CTU's {\tt tx2-auto-3} F1/10 Model Car}
+\picw=10cm \cinspic ../images/tx2-auto-3.png
+\caption/f The CTU's {\tt tx2-auto-3} F1/10 Model Car based on NVIDIA Jetson TX2.
+\endinsert
 
 
 \sec Hardware Stack
@@ -104,18 +108,13 @@ Throughout time, there have been many iterations of VESC's design, and different
 \caption/f Hokuyo UST-10LX LiDAR
 \endinsert
 
-\medskip
-\medskip
-\medskip
-\medskip
-
 \secc IMU
 
-% \midinsert
+\midinsert
 \clabel[img_imu]{SparkFun 9DoF Razor IMU M0}
 \picw=5cm \cinspic ../images/14001-SparkFun_9DoF_Razor_IMU_M0-01.jpg
 \caption/f SparkFun 9DoF Razor IMU M0
-% \endinsert
+\endinsert
 
 
 \secc Additional Components
