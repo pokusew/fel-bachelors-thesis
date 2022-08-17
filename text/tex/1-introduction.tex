@@ -1,7 +1,6 @@
 \chap[intro] Introduction
 
-% TODO: re-enable?
-% {\sbf Disclaimer:} I severely underestimated the required time for writing this thesis text. During my work on this topic, I tried and made work tons of different things, leaving too little time for the final write-up. This is the reason why chapters \ref[tracing] and \ref[evaluation] are incomplete. They contain links to the GitHub repository with the implementation that will contain some background info. Additionally, this thesis has a~homepage\urlnote{https://github.com/pokusew/fel-bachelors-thesis} on GitHub, where an up-to-date revision of this text can be found.
+{\sbf Note:} I severely underestimated the required time for writing this thesis text. During my work on this topic, I tried and made work tons of different things, leaving too little time for the final write-up. This is the reason why chapters \ref[tracing] and \ref[evaluation] are incomplete. However, this thesis has a~homepage\urlnote{https://github.com/pokusew/fel-bachelors-thesis} on GitHub, where an up-to-date revision of this text can be found.
 
 % TODO: use vertical break
 % \nl
@@ -10,12 +9,12 @@ Autonomous robots are successfully performing increasingly sophisticated tasks, 
 
 Since ROS was started in 2007 \cite[ros_history], it has gained great popularity and has become the standard in the robotics community. However, it has turned out that the original architecture (ROS~1) has some limitations concerning {\em performance, efficiency and real-time safety}, making it unsuitable for production deployments. Thus, a~new version of ROS – {\sbf ROS~2} – has been designed from the ground up to allow more use-cases and solve many pain points of ROS~1 \cite[ros2_design_why, paper_ros2]. Missing features and incompatible packages have been slowing down the adoption of ROS~2 since its first public release in 2017. But in recent years, the situation has improved a~lot, and the adoption of ROS~2 has accelerated \cite[ros_metrics]. Thus, now might be the right time to start migrating applications from ROS~1 to ROS~2 and benefit from the new possibilities.
 
-At CTU, ROS~1 has been at the heart of the autonomous driving stack used by the CTU team for the {\em F1/10 Autonomous Racing Competition} for many years. High-speed maneuvers and racing in general are areas where many usually neglected details such as communication latency, jitter, and temporal determinism, suddenly play a~significant role.
-
 \midinsert
 \picw=8cm \cinspic ../images/tx2-auto-usa.png
 \caption/f One of the CTU's F1/10 Autonomous Model Cars.
 \endinsert
+
+At CTU, ROS~1 has been at the heart of the autonomous driving stack used by the CTU team for the {\em F1/10 Autonomous Racing Competition} for many years. High-speed maneuvers and racing in general are areas where many usually neglected details such as communication latency, jitter, and temporal determinism, suddenly play a~significant role.
 
 {\sbf The goal} of this thesis is to migrate a~selected part of the CTU's F1/10 project from ROS~1 to ROS~2, taking advantage of its new features. The result should be a~working port running on ROS~2 in a~simulator and on a~physical model car with an NVIDIA Jetson computing module. Also, an approach for analyzing the real-time properties of the running AV stack should be presented.
 

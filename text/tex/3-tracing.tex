@@ -1,3 +1,17 @@
-\chap[tracing] Methods for Evaluating ROS
+\chap[tracing] Methods for Evaluating ROS Applications
 
-Please refer to the "pokusew/ros2-tracing-experiments"\urlnote{https://github.com/pokusew/ros2-tracing-experiments}
+The current F1/10 algorithms sometimes do not work as well as expected. That may be caused by variation in latencies (jitter) throughout the software pipeline (and non-deterministic runtime in general).
+
+There have been many studies that focused on analyzing ROS 2 properties in this area. However, most of them have been using synthetic or simplified systems, because it is hard to collect the required data without affecting the running system and without the need for extensive changes in the evaluated codebase.
+
+This problem prompted the creation of "ros2_tracing"~\cite[ros2_tracing] framework, which brings an efficient way to collect and analyze runtime metrics of real ROS 2 systems. It relies on LTTng (Linux Trace Toolkit Next Generation) for efficiently collecting runtime events. It adds instrumentation to the core ROS 2 libraries (DDS, rmw, rcl, rclcpp). Because the framework has become a part of ROS 2 core, instrumentation points are now shipped all of the core ROS 2 libraries (although they are disabled unless "tracetools" package is rebuilt on a system where LTTng is present).
+
+Nevertheless, the hard part is getting useful results from the collected tracing events. With some effort, it is possible reconstruct messages flow across the system, including casual relationships, opening a way for interesting analyzes~\cite[ros2_message_flow_analysis].
+
+We will use the "ros2_tracing" in Chapter~\ref[evaluation] to evaluate some properties of our migrated ROS 2 stack.
+
+\midinsert
+\clabel[demo_message_flow]{ROS 2 Message Flow Analysis in Eclipse Trace Compass}
+\picw=14cm \cinspic ../images/ros2-message-flow-trace-compass-demo-2.png
+\caption/f A message flow reconstruction as implemented in ~\cite[ros2_message_flow_analysis]. We were able to recreate the results following the steps the paper.
+\endinsert
