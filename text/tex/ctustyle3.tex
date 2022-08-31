@@ -780,7 +780,8 @@
    \_ifx\_citelinkA\_empty \_noindent\_hskip2\_iindent \_llap{[\_the\_bibnum] }%
    \_else \_noindent \_fi
 }
-\_addto\_bibskip{\_ifnum\_bibnum>0 \_vskip-\_parskip \_fi}
+% note: The part `\_ifnum\_bibnum=16 \_vskip8mm \_fi` is a hack to force nice wrapping for my theis' references.
+\_addto\_bibskip{\_ifnum\_bibnum>0 \_vskip-\_parskip \_fi \_ifnum\_bibnum=16 \_vskip8mm \_fi}
 
 %%% Slides:
 
