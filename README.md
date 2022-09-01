@@ -31,6 +31,9 @@ students.
 ## Content
 
 * 👉 **[Thesis](./text)** (thesis text as TeX source, PDF export, build script) 👈
+	* **Latest PDF export:
+	  [Using_ROS_2_for_High-Speed_Maneuvering_in_Autonomous_Driving.pdf](https://github.com/pokusew/fel-bachelors-thesis/raw/main/text/Using_ROS_2_for_High-Speed_Maneuvering_in_Autonomous_Driving.pdf)**
+	  👈
 * [Presentation](./presentation)
 * [Formalities](./formalities) (official assignment, thesis requirements)
 
