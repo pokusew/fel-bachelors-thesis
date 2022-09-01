@@ -67,14 +67,14 @@ In addition to the Computation Graph and communication possibilities, both versi
 
 ROS~1 is the original version of ROS that dates back to 2007~\cite[ros_history]. Version 1.0 was published in 2010. Since then, 13 ROS~1 distributions have been released~\cite[ros1_distros]. The latest ROS~1 version, Noetic, was released in 2020. There are no plans to release any new ROS~1 versions besides Noetic. Its support will end in May 2025. After that date, ROS~1 will be effectively deprecated.
 
-Full documentation of ROS~1 can be found at ~\cite[ros1_docs].
+Full documentation of ROS~1 can be found at~\cite[ros1_docs].
 
 
 \secc Architecture
 
 In ROS~1's Computation Graph, there must always be a~special node called {\em ROS~Master}. It provides name registration and lookup services to the rest of the Computation Graph. It coordinates the communication among the nodes. That includes graph changes notifications and establishing connections between nodes. It offers two XML-RPC-based APIs – Master API and Parameter Server API.
 
-ROS~1 has a~concept of central key/value data storage called {\em Parameter~Server}. It is a~part of ROS Master (Parameter Server API). a~key/value pair is called a~parameter. All nodes in the Computation Graph can get and manipulate the key/value data stored in the Parameter Server. The parameters can be used as configuration storage for nodes, which allows easy altering of the system (nodes') behavior at runtime.
+ROS~1 has a~concept of central key/value data storage called {\em Parameter~Server}. It is a~part of ROS Master (Parameter Server API). A~key/value pair is called a~parameter. All nodes in the Computation Graph can get and manipulate the key/value data stored in the Parameter Server. The parameters can be used as configuration storage for nodes, which allows easy altering of the system (nodes') behavior at runtime.
 
 ROS~1 offers two underlying data transport protocols – {\em TCPROS} and {\em UDPROS}. As the names suggest, they are based on TCP and UDP, respectively.
 
@@ -85,7 +85,7 @@ ROS~1 offers two underlying data transport protocols – {\em TCPROS} and {\em U
 
 \secc Build System
 
-ROS~1 uses catkin build system\fnote{In older ROS~1 distributions, rosbuild was used. It is also (theoretically) possible to use ROS~2 build tool colcon to build ROS~1 workspace.}. Catkin supports CMake packages that use special catkin CMake macros. The actual build is controlled by a~build tool. ROS~1 catkin workspace can be built using different build tools – "catkin_make", "catkin_make_isolated", "catkin_tools".
+ROS~1 uses {\sbf catkin} build system\fnote{In older ROS~1 distributions, rosbuild was used. It is also (theoretically) possible to use ROS~2 build tool colcon to build ROS~1 workspace.}. Catkin supports CMake packages that use special catkin CMake macros. The actual build is controlled by a~build tool. ROS~1 catkin workspace can be built using different build tools – "catkin_make", "catkin_make_isolated", "catkin_tools".
 
 
 \secc CLI
@@ -102,17 +102,17 @@ While nodes can be started manually (via running the corresponding executables),
 
 “Since ROS was started in 2007, a~lot has changed in the robotics and ROS community. The goal of the ROS~2 project is to adapt to these changes, leveraging what is great about ROS~1 and improving what is not.”~\cite[ros2_docs]
 
-Full documentation of the latest ROS~2 release can be found at ~\cite[ros2_docs].
+Full documentation of the latest ROS~2 release can be found at~\cite[ros2_docs].
 
 
 \secc Architecture
 
-The architecture of ROS~2 was designed from the ground up, addressing issues of ROS~1~\cite[ros2_design_why]. The newly designed architecture should address new use-cases as well as many issues from ROS~1:
+The architecture of ROS~2 was designed from the ground up, addressing many issues of ROS~1 while adding support for new use-cases \cite[ros2_design_why, paper_ros2]. These include:
 \begitems
 * Truly distributed system (no master node).
-* Support for real-time.
-* More nodes in one process (Composable nodes).
-* Better support for communication in non-ideal networks.
+* Support for real-time applications.
+* Robust communication supporting non-ideal networks.
+* More nodes in one process (composable nodes with intra-process communication).
 * Small embedded platforms support.
 \enditems
 
@@ -122,7 +122,7 @@ The architecture of ROS~2 was designed from the ground up, addressing issues of 
 \caption/f ROS~2 Architecture~\cite[ros2_docs_internal_interfaces].
 \endinsert
 
-While ROS~1's communications stack is built almost entirely from scratch, ROS~2 relies on {\em Data Distribution Service} (DDS). DDS is “a middleware protocol and API standard for data-centric connectivity from the Object Management Group (OMG). It provides low-latency data connectivity, extreme reliability, and a~scalable architecture for Internet of Things applications need”~\cite[omg_what_is_dds].
+While ROS~1's communications stack is built almost entirely from scratch, ROS~2 relies on {\sbf Data Distribution Service} (DDS). DDS is “a middleware protocol and API standard for data-centric connectivity from the Object Management Group (OMG). It provides low-latency data connectivity, extreme reliability, and a~scalable architecture for Internet of Things applications need”~\cite[omg_what_is_dds].
 
 ROS~2 Client Libraries have a~different architecture compared to the ROS~1 ones. Instead of reimplementing all the features in all the programming languages separately, the common functionality is implemented in the {\em rcl} library that exposes a~C API. Client Libraries then use the {\em rcl} library and implement the rest of the features on top of it (in particular, language-dependent features, such as threading and execution model).
 
@@ -133,7 +133,7 @@ The whole relationship among different parts of ROS~2 Client Libraries is shown 
 
 \secc Build System
 
-ROS~2 uses ament as a~build system and colcon as a~build tool. Ament supports three types of packages: CMake with "ament_cmake", pure Python packages (Python setuptools based), and pure CMake packages. Colcon always builds all packages in isolation and in the correct order. For ensuring the correct build order, a~dependencies graph is constructed, which must be a~directed acyclic graph in order for the workspace to be buildable. It also tries to parallelize the build up to the level that mutual dependencies among packages allow.
+ROS~2 uses {\sbf ament} as a~build system and {\sbf colcon} as a~build tool. Ament supports three types of packages: CMake with "ament_cmake", pure Python packages (Python setuptools based), and pure CMake packages. Colcon always builds all packages in isolation and in the correct order. For ensuring the correct build order, a~dependencies graph is constructed, which must be a~directed acyclic graph in order for the workspace to be buildable. It also tries to parallelize the build up to the level that mutual dependencies among packages allow.
 
 
 \secc CLI
@@ -146,14 +146,14 @@ It is very similar to ROS~1 CLI, but instead of having multiple commands, ROS~2 
 The Launch System has been completely redesigned to support the new concepts in ROS~2. It is implemented in Python, and it provides a~way to {\em declaratively} describe the system to launch~\cite[ros2_docs_launch, ros2_design_launch].
 Launch files can be written in Python, XML, or YAML. Python-based launch files represent the most powerful and comfortable\fnote{Since Python-based launch files are just Python code, one can take advantage of IDEs' powerful auto-completion and coding assistance features.} method of describing a~system to launch. In fact, the other supported formats, XML and YAML, directly map to the Launch System's Python API.
 
-Because of their declarative nature, Python-based launch files might be quite verbose and even might seem counter-intuitive and restrictive at first. But the declarative approach brings many advantages. “By separating the declaration of an action from the execution of an action, tools may use the launch descriptions to do things like visualize what a~launch description will do without actually doing it.”~\cite[ros2_design_launch] This is used for example by "ros2 launch" command to determine and print launch arguments of a~launch file. It is also the reason why it is possible to map some of the Launch System declarative APIs to declarative languages such as XML and YAML.
+Because of their declarative nature, Python-based launch files might be quite verbose and even might seem counter-intuitive and restrictive at first. But the declarative approach brings many advantages. “By separating the declaration of an action from the execution of an action, tools may use the launch descriptions to do things like visualize what a~launch description will do without actually doing it.”~\cite[ros2_design_launch] This is used for example by "ros2 launch" command to determine and print launch arguments of a~launch file. It is also the reason why it is possible to map some of the Launch System's declarative APIs to declarative languages such as XML and YAML.
 
 \medskip
 
 
-\sec Summary of Differences between ROS~1 and ROS~2
+\sec Summary of Differences \nobreak{between} ROS~1 and ROS~2
 
-ROS~2 has better architecture and offers more features. Thanks to DDS and its fine-grained QoS, ROS~2 handles communication in non-ideal networks better than ROS~1. Furthermore, the ROS~2 client libraries offer better control over code execution and threading as they support writing custom executors. ROS~2 architecture is designed with real-time support in mind.\fnote{Although the actual real-time properties may differ dramatically based on various configuration and threading/execution model choices.}
+ROS~2 has a better architecture and offers more features. Thanks to DDS and its fine-grained QoS, ROS~2 handles communication in non-ideal networks better than ROS~1. Furthermore, the ROS~2 client libraries offer better control over code execution and threading as they support writing custom executors. ROS~2 architecture is designed with real-time support in mind.\fnote{Although the actual real-time properties may differ dramatically based on various configuration and threading/execution model choices.}
 
 The following table summarizes the most notable differences between ROS~1 and ROS~2:
 

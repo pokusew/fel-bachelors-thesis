@@ -3,7 +3,7 @@
 Having introduced ROS~1 and 2 and having described the components of the CTU's F1/10 platform, we can move on to the actual migration from ROS~1 to ROS~2.
 
 
-\sec Note about Different ROS~2 Releases
+\sec[our_targeted_ros2_versions] Note about Different ROS~2 Releases
 
 Throughout the time we worked with the CTU's F1/10 platform, multiple ROS~2 versions were released.
 
@@ -74,7 +74,7 @@ In order to avoid unnecessary complexity and overhead of micro-ROS, we decided t
 
 Next, we had to rewrite the firmware for the Teensy incorporating the new communication protocol. While doing that, we also tried to document some parts of the original code. However, there is still a big room for improvement. The new firmware implementation can be found in "pokusew/teensy-drive"\urlnote{https://github.com/pokusew/teensy-drive} repository.
 
-Finally, we implemented a ROS~2 node called "teensy_drive"\urlnote{https://github.com/pokusew/f1tenth-rewrite/tree/main/src/vehicle_platform/teensy_drive} that connects to the Teensy via USB (CDC-ACM) and receives and send appropriate messages between Teensy and the ROS~2 network.
+Finally, we implemented a ROS~2 node called "teensy_drive"\urlnote{https://github.com/pokusew/f1tenth-rewrite/tree/main/src/vehicle_platform/teensy_drive} that connects to the Teensy via USB (CDC-ACM) and receives and sends appropriate messages between Teensy and the ROS~2 network.
 
 
 \secc VESC
@@ -106,7 +106,7 @@ We collected a lot of documentation, notes, commands, links, and configuration r
 
 Nevertheless, the main problem was Jetson's outdated software and its specifics. At the time of writing, the latest available NVIDIA JetPack is 4.6.1, which is based on Ubuntu 18. At the same time, the latest available Ubuntu LTS release is Ubuntu 22.
 
-Officially, no ROS~2 version we target supports Ubuntu 18 (TODO: ref ROS~2 versions). However, one can attempt to build ROS~2 from sources even on older Ubuntus, but one must be prepared to face some problems with outdated system dependencies. We tried to do that for Foxy and Galactic and we were (after some struggles) successful.
+Officially, no ROS~2 version \ilink[ref:our_targeted_ros2_versions]{we target} supports Ubuntu 18~\cite[rep_2000]. However, one can attempt to build ROS~2 from sources even on older Ubuntus, but one must be prepared to face some problems with outdated system dependencies. We tried to do that for Foxy and Galactic and we were (after some struggles) successful.
 
 Running ROS~2 natively on the Jetson is surely nice. Nevertheless, one has to build all application dependencies from their source code, as no prebuilt apt ROS packages are provided by ROS.
 

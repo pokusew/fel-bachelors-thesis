@@ -2,7 +2,7 @@
 
 The F1/10 platform is a~scaled-down (1:10) model of an autonomous car that originates from the F1/10 Autonomous Racing Competition\urlnote{https://f1tenth.org/}. Thanks to its affordability and similarity to a~real car, the platform can be easily used for developing, testing, and verifying autonomous driving systems and related algorithms.
 
-At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-usa"\fnote{This new model was designed by a~fellow student, Tomáš Nagy. The main difference compared to the {\tt tx2-auto-3} is its chassis design (components' placement and mounting). The {\tt usa} suffix in the model name refers to the fact that this model was assembled in the USA during our (my and Tomáš's) internship at the University of Pennsylvania.} and "tx2-auto-3", which are depicted in Figure~\ref[img_tx2_auto_usa] and Figure~\ref[img_tx2_auto_3], respectively. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a~description is a~prerequisite for a~successful \ilink[ref:migration]{migration} to ROS~2.
+At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2017, dusil_detection_2019, klapalek_avoidance_2019]. In this thesis, we focus on the latest iteration of the design represented by the models codenamed "tx2-auto-usa"\fnote{This new model was designed by a~fellow student, Tomáš Nagy. The main difference compared to the {\tt tx2-auto-3} is its chassis design (components' placement and mounting). The {\tt usa} suffix in the model name refers to the fact that this model was assembled in the USA during my and Tomáš's internship at the University of Pennsylvania.} and "tx2-auto-3", which are depicted in Figure~\ref[img_tx2_auto_usa] and Figure~\ref[img_tx2_auto_3], respectively. This chapter aims to provide an up-to-date functional description of their hardware and software components. Such a~description is a~prerequisite for a~successful \ilink[ref:migration]{migration} to ROS~2.
 
 \midinsert
 \clabel[img_tx2_auto_usa]{The CTU's {\tt tx2-auto-usa} F1/10 Model Car}
@@ -22,8 +22,8 @@ At CTU, multiple F1/10 models have been created and used ~\cite[vajnar_f1tenth_2
 The platform is based on an off-the-shelf RC car model from Traxxas (i.e., Traxxas Slash, but different ones can be used as well) with added components that enable autonomous operation (sensors, computers). The list below provides a~quick overview of those components, which are then described in detail in the following subsections. The Figure~\ref[diagram_ctu_f1tenth_hw] shows the functional relationships among them.
 
 \begitems
-* {\sbf NVIDIA Jetson TX2}  – The main computing unit that runs the autonomous driving stack.
-* {\sbf VESC (Enertion FOCBOX VESC-X)}– Electric Speed Controller (ESC) that controls the BLDC motor.
+* {\sbf NVIDIA Jetson TX2} – The main computing unit that runs the autonomous driving stack.
+* {\sbf VESC (Enertion FOCBOX VESC-X)} – Electric Speed Controller (ESC) that controls the BLDC motor.
 * {\sbf Teensy 3.2} – a~microcontroller (MCU) for controlling the steering and handling the communication with an RC Transmitter (Manual Control). It also implements an independent emergency stop (eStop).
 * {\sbf Hokuyo UST-10LX} – LiDAR
 * {\sbf SparkFun 9DoF Razor IMU M0} – IMU
@@ -40,14 +40,14 @@ The platform is based on an off-the-shelf RC car model from Traxxas (i.e., Traxx
 
 While the main chassis, BLDC drive motor, steering servo, and RC receiver from the Traxxas model are preserved, the ESC is replaced by a~VESC.
 
-Further, a~structure for mounting the sensors and the main computing unit is added. While "tx2-auto-3" uses a~two-layer design – one laser-cut plate which is mounted on the original chassis using standoffs; "tx2-auto-usa" features a~much more sophisticated and streamlined design consisting of multiple 3D-printed parts. The "tx2-auto-usa"'s design allows much easier battery replacement.
+Further, a~structure for mounting the sensors and the main computing unit is added. While "tx2-auto-3" uses a~two-layer design, one laser-cut plate which is mounted on top of the original chassis using standoffs; "tx2-auto-usa" features a~much more sophisticated and streamlined design consisting of multiple 3D-printed parts. The "tx2-auto-usa"'s design allows much easier battery replacement.
 
 Finally, a~powerboard is needed to power the AV components. For that purpose, a~custom powerboard has been designed. One of the latest iterations was created as a~part of~\cite[dusil_detection_2019].
 
 
 \secc NVIDIA Jetson TX2
 
-The NVIDIA Jetson TX2 forms the "brain" of the car. It processes data from all sensors and decides what to do. In other words, it runs the autonomous driving pipeline, which usually includes perception, localization (state estimation), planning, and control. Such a~task requires a~powerful device. Additional requirements include power-efficient operation (because of the limited capacity of batteries) and small form factor (because of limited space in the chassis). Fortunately, NVIDIA Jetson TX2 fulfills all of these requirements.
+The NVIDIA Jetson TX2 forms the “brain” of the car. It processes data from all sensors and decides what to do. In other words, it runs the autonomous driving pipeline, which usually includes perception, localization (state estimation), planning, and control. Such a~task requires a~powerful device. Additional requirements include power-efficient operation (because of the limited capacity of batteries) and small form factor (because of limited space in the chassis). Fortunately, NVIDIA Jetson TX2 fulfills all of these requirements.
 
 NVIDIA Jetson TX2 is a~very powerful but power-efficient embedded system (SoC) designed for autonomous machines. It is distributed as a~very compact module with a~standardized board-to-board connector. This way, it can be used in applications that might require different physical IO interfaces. On our car, we use the Orbitty Carrier board from Connect Tech, which provides a~suitable form factor for our use case. The Table~\ref[table_jetson_tx2_specs] lists some of Jetson TX2's key specs.
 
@@ -123,18 +123,18 @@ The design requires a~few additional components that were not mentioned in the p
 
 \begitems
 * a~USB hub – Because NVIDIA Jetson TX2 features only one USB 3.0 port.
-* An Ethernet USB adapter – In case we connect the LiDAR to the only Ethernet port on the Jetson, and we still want to use a~wired network connection (might be useful during development).
+* an~Ethernet USB adapter – In case we connect the LiDAR to the only Ethernet port on the Jetson, and we still want to use a~wired network connection (might be useful during development).
 \enditems
 
 
 \sec Software Stack
 
-The CTU F1/10 autonomous driving stack is based on ROS~1 Kinetic Kame. It consists of multiple components that can be used in various combinations to support different applications. a~detailed overview of the CTU F1/10 platform architecture can be found in Section 4.3.2 of~\cite[klapalek_avoidance_2019]. a~high-level overview of a~typical data flow is depicted in Figure~\ref[diagram_ctu_f1tenth_sw].
+The CTU F1/10 autonomous driving stack is based on ROS~1 Kinetic Kame. It consists of multiple components that can be used in various combinations to support different applications. A~detailed overview of the CTU F1/10 platform architecture can be found in Section 4.3.2 of~\cite[klapalek_avoidance_2019]. A~high-level overview of a~typical data flow is depicted in Figure~\ref[diagram_ctu_f1tenth_sw].
 
 \midinsert
 \clabel[diagram_ctu_f1tenth_sw]{CTU's F1/10 Platform SW Architecture}
 \picw=14cm \cinspic ../images/ctu-f1tenth-software-ros1.pdf
-\caption/f a~high-level overview of a~typical data flow is depicted in the the CTU F1/10 platform.
+\caption/f A~high-level overview of a~typical data flow is depicted in the the CTU F1/10 platform.
 \endinsert
 
 In the next subsections, we briefly describe some of the components that will be relevant for the \ilink[ref:migration]{migration}.
